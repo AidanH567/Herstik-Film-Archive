@@ -1,13 +1,13 @@
 import {Routes, Route} from 'react-router-dom';
 
-import AppLayout from './app/AppLayout.jsx';
-import Home from '../pages/Home.jsx';
 
+import Home from '../pages/Home.jsx';
 import List from '../pages/List.jsx';
 import Journal from '../pages/Journal.jsx';
 import Login from '../pages/Login.jsx';
 import SignUp from '../pages/SignUp.jsx';
 import Reviews from '../pages/Reviews.jsx';
+import AppLayout from '../app/AppLayout.jsx';
 
 export default function AppRoutes() {
     return (
