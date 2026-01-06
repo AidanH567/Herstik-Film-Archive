@@ -11,6 +11,7 @@ import AppLayout from './AppLayout.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import Films from '../pages/Films.jsx';
 
+
 export default function AppRoutes() {
     return (
         <Routes>
@@ -22,6 +23,7 @@ export default function AppRoutes() {
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<SignUp />} />
                 <Route path="reviews" element={<Reviews />} />
+                <Route path="journal" element={<Journal />} />
                 {/* 404 */}
                 <Route path="*" element={<NotFound />} />
             </Route>
