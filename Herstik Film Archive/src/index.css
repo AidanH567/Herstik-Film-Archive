@@ -2,21 +2,26 @@
    App Layout
 ========================= */
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .app-shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
-/* Main content expands to push footer down */
+/* main = vertical space only */
 .app-main {
   flex: 1;
-  max-width: 1100px;
+  padding: 32px 0; /* vertical spacing */
+}
+
+/* container = horizontal spacing only */
+.container {
+ max-width: 1100px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 0 24px;
 }

@@ -10,26 +10,44 @@
   align-items: center;
   padding: 1rem 2rem;
   border-bottom: 1px solid #222;
-  background-color: #111;
+  background-color: #03002e;
+  color: white;
+  padding-left: 300px;
+  padding-right: 300px;
 }
+
+.header-inner{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+
 
 .brand {
   font-weight: 700;
   letter-spacing: 0.2px;
 }
 
-/* .nav {
+
+.nav {
   display: flex;
   gap: 1rem;
 }
 
+/* Base link style */
 .nav a {
-  opacity: 0.85;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
+/* Hover state */
 .nav a:hover {
-  opacity: 1;
-} */
+  color: #b5b5b5;
+}
 
 /* =========================
    Footer
@@ -42,3 +60,6 @@
   opacity: 0.6;
   border-top: 1px solid #222;
 }
+
+
+

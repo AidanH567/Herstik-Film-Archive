@@ -7,9 +7,13 @@ export default function AppLayout() {
   return (
     <div className="app-shell">
       <Header />
+
       <main className="app-main">
-        <Outlet />
+        <div className="container">
+          <Outlet />
+        </div>
       </main>
+
       <Footer />
     </div>
   )

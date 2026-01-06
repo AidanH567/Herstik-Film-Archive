@@ -9,6 +9,7 @@ import SignUp from '../pages/SignUp.jsx';
 import Reviews from '../pages/Reviews.jsx';
 import AppLayout from './AppLayout.jsx';
 import NotFound from '../pages/NotFound.jsx';
+import Films from '../pages/Films.jsx';
 
 export default function AppRoutes() {
     return (
@@ -16,6 +17,7 @@ export default function AppRoutes() {
             <Route path="/" element={<AppLayout />}>
                 <Route index element={<Home />} />
                 <Route path="list" element={<List />} />
+                <Route path="films" element={<Films />} />
                 <Route path="journal" element={<Journal />} />
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<SignUp />} />
