@@ -9,12 +9,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #222;
-  background-color: #03002e;
-  color: white;
+  background-color: #111a2e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-left: 300px;
   padding-right: 300px;
 }
+
+
 
 .header-inner{
   display: flex;
@@ -23,17 +24,15 @@
   width: 100%;
 }
 
-
-
 .header a {
-  color: #ffffff;
+  color: #e6e9f0;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .header a:hover {
-  color: #b5b5b5;
+  color: #e6e9f0;opacity: 0.7;
 }
 
 
@@ -44,7 +43,7 @@
 
 /* Base link style */
 .nav a {
-  color: #ffffff;
+  color: #e6e9f0;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
@@ -52,7 +51,7 @@
 
 /* Hover state */
 .nav a:hover {
-  color: #b5b5b5;
+  color: #e6e9f0;
 }
 
 /* =========================

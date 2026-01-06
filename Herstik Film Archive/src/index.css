@@ -5,6 +5,12 @@
 html, body {
   margin: 0;
   padding: 0;
+  background: linear-gradient(
+    to bottom,
+    #1b2a4a 0%,
+    #0f1115 60%
+  );
+  color: #e6e9f0;
 }
 
 .app-shell {
