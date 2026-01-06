@@ -1,18 +1,44 @@
+
+
+/* =========================
+   Header
+========================= */
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   border-bottom: 1px solid #222;
-  background-color: red;
+  background-color: #111;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* .nav {
+  display: flex;
+  gap: 1rem;
 }
 
 .nav a {
-  margin-left: 1rem;
+  opacity: 0.85;
 }
 
+.nav a:hover {
+  opacity: 1;
+} */
+
+/* =========================
+   Footer
+========================= */
+
 .footer {
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
+  font-size: 0.9rem;
   opacity: 0.6;
+  border-top: 1px solid #222;
 }

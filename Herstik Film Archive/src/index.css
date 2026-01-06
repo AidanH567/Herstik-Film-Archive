@@ -1,0 +1,22 @@
+/* =========================
+   App Layout
+========================= */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Main content expands to push footer down */
+.app-main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
