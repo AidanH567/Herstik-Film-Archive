@@ -1,11 +1,11 @@
 export default function MovieCard({ movie }) {
   return (
     <div className="movie-card">
-      <div
+      <img
         className="movie-poster"
-        aria-label={movie.title}
+        src={movie.poster}
+        alt={movie.title}
       />
-      <img src={movie.poster} alt={movie.title} />
     </div>
   )
 }
