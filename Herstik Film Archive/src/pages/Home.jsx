@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import Poster from "/poster.webp";
 // import movies from "../data/movies.js";
 import MovieCard from "../components/MovieCard.jsx";
+import ReviewCard from "../components/RecentReviews.jsx";
 // import review from "../data/review.js"
+import "../App.css";
 
 export default function Home() {
 const movies = [
@@ -103,12 +105,33 @@ const reviews = [
     likedByUser: false,
     createdAt: "2025-01-02",
   },
+  {
+    id: 4,
+    user: {
+      username: "framebyframe",
+      displayName: "Frame by Frame",
+      avatar: "https://i.pravatar.cc/100?img=45",
+    },
+    movie: {
+      id: 103,
+      title: "The Last Projectionist",
+      year: 2023,
+      poster: "https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
+    },
+    rating: 5,
+    ratingCount: 412,
+    reviewText:
+      "A love letter to cinema itself.\n\nWatched this and immediately wanted to rewatch every film I love.",
+    likes: 9821,
+    likedByUser: false,
+    createdAt: "2025-01-02",
+  },
 ]
 
 
   return (
     <div className="home">
-
+      
       <section className="home-hero">
 
         <div className="hero-text">
@@ -147,9 +170,13 @@ const reviews = [
       </section>
 
       <section className="reviews">
-       {reviews.map((review) => (
-        <MovieCard key={review.id} movie={review.movie} />
-       ))}
+      <h2>Recent reviews</h2>
+
+        <div className="reviews-grid">
+          {reviews.map(review => (
+            <ReviewCard key={review.id} review={review} />
+          ))}
+        </div>
       </section>
 
     </div>

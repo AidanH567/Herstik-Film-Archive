@@ -144,4 +144,68 @@
   
 }
 
+.review-card {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.review-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+}
 
+.review-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+}
+
+.review-user {
+  font-weight: 600;
+}
+
+.review-film {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.review-rating {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.stars {
+  font-size: 1rem;
+}
+
+.rating-count {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.review-text {
+  white-space: pre-line;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.review-footer {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
