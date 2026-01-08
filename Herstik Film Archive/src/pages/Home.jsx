@@ -5,42 +5,44 @@ import MovieCard from "../components/MovieCard.jsx";
 import ReviewCard from "../components/RecentReviews.jsx";
 // import review from "../data/review.js"
 import "../App.css";
+import { getTrendingMovies } from "../services/tmdb.js";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-const movies = [
-  {
-    id: 550,
-    title: "Fight Club",
-    poster: "https://image.tmdb.org/t/p/w500/bptfVGEQuv6vDTIMVCHjJ9Dz8PX.jpg",
-  },
-  {
-    id: 238,
-    title: "The Godfather",
-    poster: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
-  },
-  {
-    id: 680,
-    title: "Pulp Fiction",
-    poster: "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
-  },
-  {
-    id: 13,
-    title: "Forrest Gump",
-    poster: "https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg",
-  },
-  {
-    id: 122,
-    title: "The Lord of the Rings: The Return of the King",
-    poster: "https://image.tmdb.org/t/p/w500/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
-  },
-  {
-    id: 155,
-    title: "The Dark Knight",
-    poster: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-  },
-]
+  const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-const reviews = [
+  const IMAGE_BASE = "https://image.tmdb.org/t/p/w500"
+
+  useEffect(() => {
+    async function loadMovies() {
+      try {
+        const results = await getTrendingMovies()
+
+        const mapped = results.map(movie => ({
+          id: movie.id,
+          title: movie.title,
+          poster: movie.poster_path
+            ? IMAGE_BASE + movie.poster_path
+            : null,
+        }))
+
+        setMovies(mapped)
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadMovies()
+  }, [])
+
+  if (loading) return <p>Loading…</p>
+  if (error) return <p>Error: {error}</p>
+
+  const reviews = [
   {
     id: 1,
     user: {
@@ -86,27 +88,6 @@ const reviews = [
 
   {
     id: 3,
-    user: {
-      username: "framebyframe",
-      displayName: "Frame by Frame",
-      avatar: "https://i.pravatar.cc/100?img=45",
-    },
-    movie: {
-      id: 103,
-      title: "The Last Projectionist",
-      year: 2023,
-      poster: "https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
-    },
-    rating: 5,
-    ratingCount: 412,
-    reviewText:
-      "A love letter to cinema itself.\n\nWatched this and immediately wanted to rewatch every film I love.",
-    likes: 9821,
-    likedByUser: false,
-    createdAt: "2025-01-02",
-  },
-  {
-    id: 4,
     user: {
       username: "framebyframe",
       displayName: "Frame by Frame",
