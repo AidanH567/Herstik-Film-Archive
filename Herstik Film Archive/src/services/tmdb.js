@@ -31,3 +31,19 @@ export async function getPopularMovies() {
   const data = await res.json()
   return data.results
 }
+
+export async function getMovieDetails(id) {
+  const res = await fetch(`${BASE_URL}/movie/${id}`, options)
+  if (!res.ok) throw new Error("Failed to fetch movie details")
+  return await res.json()
+}
+
+export async function getMovieCredits(id) {
+  const res = await fetch(`${BASE_URL}/movie/${id}/credits`, options)
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch movie credits")
+  }
+
+  return await res.json()
+}

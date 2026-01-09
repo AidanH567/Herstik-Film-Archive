@@ -10,6 +10,7 @@ import Reviews from '../pages/Reviews.jsx';
 import AppLayout from './AppLayout.jsx';
 import NotFound from '../pages/NotFound.jsx';
 import Films from '../pages/Films.jsx';
+import FilmDetail from '../pages/FilmDetail.jsx';
 
 
 export default function AppRoutes() {
@@ -19,6 +20,7 @@ export default function AppRoutes() {
                 <Route index element={<Home />} />
                 <Route path="list" element={<List />} />
                 <Route path="films" element={<Films />} />
+                <Route path="films/:id" element={<FilmDetail />} />
                 <Route path="journal" element={<Journal />} />
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<SignUp />} />

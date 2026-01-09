@@ -209,3 +209,23 @@
   font-size: 0.85rem;
   opacity: 0.75;
 }
+
+.film-detail{
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.film-detail{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
+ 
+}
+.backdrop{
+  width: 80%;
+  height: 80%;
+  padding: 0;
+
+}
