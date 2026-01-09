@@ -27,6 +27,7 @@ export default function FilmDetail() {
                 ])
 
                 console.log("Credits:", creditsData)
+                console.log("Movie Data:", movieData)
 
                 setMovie(movieData)
                 setCredits(creditsData)
@@ -57,6 +58,8 @@ export default function FilmDetail() {
                 <div className="text-section">
                     <h1 className="detail-title">{movie.title}</h1>
                     <p>{year} Directed By {directors.map(d => d.name).join(", ")} </p>
+                    <p>{movie.tagline}</p>
+                    <p>{movie.overview}</p>
                 </div>
             </section>
         </div>
