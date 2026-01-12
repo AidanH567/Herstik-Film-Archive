@@ -1,3 +1,9 @@
 export default function Reviews() {
-  return <div>Reviews Page</div>;
+  return (
+    <div className="reviews">
+      <section className="review-nav">
+
+      </section>
+    </div>
+  );
 }
