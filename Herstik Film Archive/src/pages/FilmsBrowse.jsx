@@ -14,7 +14,7 @@ export default function FilmsBrowse() {
   const [movies, setMovies] = React.useState([])
 
   React.useEffect(() => {
-    // Build one "active" filter (because you don't want stacking)
+    // Build one "active" filter (because you don't want stackings)
     const active =
       (q && { key: "q", value: q }) ||
       (year && { key: "year", value: year }) ||
