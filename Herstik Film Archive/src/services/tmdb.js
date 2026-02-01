@@ -66,3 +66,15 @@ export async function getMoviesByGenre(genreId) {
   const data = await res.json()
   return data.results
 }
+
+export async function getMoviesByYear(year) {
+  const res = await fetch(`${BASE_URL}/discover/movie?primary_release_year=${year}`,
+    options)
+
+    if (!res.ok) {
+      throw new Error ("failed to fetch movies by year")
+    }
+
+    const data = await res.json()
+    return data.results
+}

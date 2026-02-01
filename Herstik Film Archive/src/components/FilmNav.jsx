@@ -38,11 +38,19 @@ export default function FilmNav() {
       <div className="film-filters">
         <label className="filter">
           <span>Year</span>
-          <select defaultValue="" onChange={(e) => goToBrowse("year", e.target.value)}>
+          <select
+            defaultValue=""
+            onChange={(e) => goToBrowse("year", e.target.value)}
+          >
             <option value="">Choose…</option>
-            <option value="2026">2026</option>
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
+            {Array.from({ length: 2026 - 1995 + 1 }, (_, i) => {
+              const year = 2026 - i // count down from 2026
+              return (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              )
+            })}
           </select>
         </label>
 
