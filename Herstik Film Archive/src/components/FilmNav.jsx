@@ -1,8 +1,14 @@
 import { useNavigate } from "react-router-dom"
-import { getMoviesByGenre, getMovieGenres } from "../services/tmdb"
+import { getMovieGenres } from "../services/tmdb"
+import { useEffect, useState } from "react"
 
 export default function FilmNav() {
   const navigate = useNavigate()
+  const [genres, setGenres] = useState([])
+
+  useEffect(() => {
+    getMovieGenres().then(setGenres).catch(console.error)
+  }, [])
 
   function goToBrowse(key, value) {
     if (!value) return
@@ -44,9 +50,11 @@ export default function FilmNav() {
           <span>Genre</span>
           <select defaultValue="" onChange={(e) => goToBrowse("genre", e.target.value)}>
             <option value="">Choose…</option>
-            <option value="action">Action</option>
-            <option value="comedy">Comedy</option>
-            <option value="drama">Drama</option>
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.name}
+              </option>
+            ))}
           </select>
         </label>
 
