@@ -21,12 +21,11 @@ export default function FilmNav() {
     navigate(`/films/browse?q=${encodeURIComponent(trimmed)}`)
   }
 
+
   return (
     <section className="film-nav">
-      <div className="film-search">
-        <label htmlFor="film-search" className="sr-only">Search films</label>
+       <div className="film-search">
         <input
-          id="film-search"
           type="search"
           placeholder="Search films..."
           onKeyDown={(e) => {

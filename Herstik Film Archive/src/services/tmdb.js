@@ -78,3 +78,13 @@ export async function getMoviesByYear(year) {
     const data = await res.json()
     return data.results
 }
+
+export async function searchMovies(query) {
+  const res = await fetch(
+    `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}`,
+    options
+  )
+
+  if (!res.ok) throw new Error("Failed to search movies")
+  const data = await res.json()
+  return data.results}

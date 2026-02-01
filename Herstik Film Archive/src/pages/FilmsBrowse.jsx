@@ -1,12 +1,13 @@
 import * as React from "react"
 import { useSearchParams } from "react-router-dom"
-import { getPopularMovies, getMoviesByGenre, getMoviesByYear } from "../services/tmdb"
+import { getPopularMovies, getMoviesByGenre, getMoviesByYear, searchMovies } from "../services/tmdb"
 import MovieCard from "../components/MovieCard"
 
 export default function FilmsBrowse() {
   const [searchParams] = useSearchParams()
   const genre = searchParams.get("genre") // only genre filter for now
   const year = searchParams.get("year")
+  const q = searchParams.get("q")
 
   const [movies, setMovies] = React.useState([])
   const [loading, setLoading] = React.useState(false)
@@ -34,6 +35,14 @@ export default function FilmsBrowse() {
     return
   }
 
+  if (q) {
+    searchMovies(q)
+      .then(setMovies)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+    return
+  }
+
   // Only year selected
   if (year) {
     getMoviesByYear(year)
@@ -48,7 +57,8 @@ export default function FilmsBrowse() {
     .then(setMovies)
     .catch((err) => setError(err.message))
     .finally(() => setLoading(false))
-}, [genre, year])
+}, [genre, year, q])
+
 
   return (
     <div className="films-browse">
