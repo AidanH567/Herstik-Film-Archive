@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { getMoviesByGenre, getMovieGenres } from "../services/tmdb"
 
 export default function FilmNav() {
   const navigate = useNavigate()

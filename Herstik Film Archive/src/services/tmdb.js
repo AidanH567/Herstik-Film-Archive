@@ -47,3 +47,22 @@ export async function getMovieCredits(id) {
 
   return await res.json()
 }
+
+export async function getMovieGenres() {
+  const res = await fetch(`${BASE_URL}/genre/movie/list`, options)
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch genres")
+  }
+
+  const data = await res.json()
+  return data.genres
+}
+
+export async function getMoviesByGenre(genreId) {
+  const res = await fetch(`${BASE_URL}/discover/movie?with_genres=${genreId}`, options)
+  if (!res.ok) throw new Error("Failed to fetch movies by genre")
+
+  const data = await res.json()
+  return data.results
+}
