@@ -12,25 +12,30 @@ import NotFound from '../pages/NotFound.jsx';
 import Films from '../pages/Films.jsx';
 import FilmDetail from '../pages/FilmDetail.jsx';
 import FilmsBrowse from '../pages/FilmsBrowse.jsx';
+import FilmsLayout from './FilmLayout.jsx';
 
 
 export default function AppRoutes() {
     return (
         <Routes>
-            <Route path="/" element={<AppLayout />}>
-                <Route index element={<Home />} />
-                <Route path="list" element={<List />} />
-                <Route path="films" element={<Films />} />
-                <Route path="films/:id" element={<FilmDetail />} />
-                <Route path="films/browse" element={<FilmsBrowse />} />
-                <Route path="journal" element={<Journal />} />
-                <Route path="login" element={<Login />} />
-                <Route path="signup" element={<SignUp />} />
-                <Route path="reviews" element={<Reviews />} />
-                <Route path="journal" element={<Journal />} />
-                {/* 404 */}
-                <Route path="*" element={<NotFound />} />
-            </Route>
-        </Routes>
+      <Route path="/" element={<AppLayout />}>
+        <Route index element={<Home />} />
+        <Route path="list" element={<List />} />
+        <Route path="journal" element={<Journal />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="reviews" element={<Reviews />} />
+
+        {/* 🎬 Films section */}
+        <Route path="films" element={<FilmsLayout />}>
+          <Route index element={<Films />} />
+          <Route path="browse" element={<FilmsBrowse />} />
+          <Route path=":id" element={<FilmDetail />} />
+        </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
     );
 }

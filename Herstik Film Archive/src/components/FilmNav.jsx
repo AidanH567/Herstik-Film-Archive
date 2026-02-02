@@ -24,7 +24,7 @@ export default function FilmNav() {
 
   return (
     <section className="film-nav">
-       <div className="film-search">
+      <div className="film-search">
         <input
           type="search"
           placeholder="Search films..."
@@ -77,22 +77,26 @@ export default function FilmNav() {
 
         <label className="filter">
           <span>Popular</span>
-          <select defaultValue="" onChange={(e) => goToBrowse("sort", e.target.value)}>
+          <select
+            defaultValue=""
+            onChange={(e) => goToBrowse("trending", e.target.value)}
+          >
             <option value="">Choose…</option>
-            <option value="popular">Popular</option>
-            <option value="top_rated">Top Rated</option>
-            <option value="newest">Newest</option>
+            <option value="day">Today</option>
+            <option value="week">This Week</option>
+            <option value="year">This Year</option>
+            <option value="all">All Time</option>
           </select>
         </label>
 
-        <label className="filter">
+        {/* <label className="filter">
           <span>Other</span>
           <select defaultValue="" onChange={(e) => goToBrowse("other", e.target.value)}>
             <option value="">Choose…</option>
             <option value="with_poster">Has Poster</option>
             <option value="short">Under 90 mins</option>
           </select>
-        </label>
+        </label> */}
       </div>
     </section>
   )

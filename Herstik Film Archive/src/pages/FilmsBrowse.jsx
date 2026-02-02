@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useSearchParams } from "react-router-dom"
-import { getPopularMovies, getMoviesByGenre, getMoviesByYear, searchMovies } from "../services/tmdb"
+import { getPopularMovies, getMoviesByGenre, getMoviesByYear, searchMovies, getTrendingMovies } from "../services/tmdb"
 import MovieCard from "../components/MovieCard"
 
 export default function FilmsBrowse() {
@@ -8,56 +8,65 @@ export default function FilmsBrowse() {
   const genre = searchParams.get("genre") // only genre filter for now
   const year = searchParams.get("year")
   const q = searchParams.get("q")
+  const trending = searchParams.get("trending")
 
   const [movies, setMovies] = React.useState([])
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
   React.useEffect(() => {
-  setLoading(true)
-  setError(null)
+    setLoading(true)
+    setError(null)
 
-  // If both genre and year are selected
-  if (genre && year) {
-    getMoviesByGenreAndYear(genre, year) // we'll define this function in services
+    // If both genre and year are selected
+    if (genre && year) {
+      getMoviesByGenreAndYear(genre, year) // we'll define this function in services
+        .then(setMovies)
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false))
+      return
+    }
+
+    // Only genre selected
+    if (genre) {
+      getMoviesByGenre(genre)
+        .then(setMovies)
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false))
+      return
+    }
+
+    if (q) {
+      searchMovies(q)
+        .then(setMovies)
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false))
+      return
+    }
+
+    // Only year selected
+    if (year) {
+      getMoviesByYear(year)
+        .then(setMovies)
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false))
+      return
+    }
+
+    if (trending) {
+      getTrendingMovies(trending)
+        .then(setMovies)
+        .catch((err) => setError(err.message))
+        .finally(() => setLoading(false))
+      return
+    }
+
+    // No filters → show popular
+    getPopularMovies()
       .then(setMovies)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-    return
-  }
-
-  // Only genre selected
-  if (genre) {
-    getMoviesByGenre(genre)
-      .then(setMovies)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-    return
-  }
-
-  if (q) {
-    searchMovies(q)
-      .then(setMovies)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-    return
-  }
-
-  // Only year selected
-  if (year) {
-    getMoviesByYear(year)
-      .then(setMovies)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-    return
-  }
-
-  // No filters → show popular
-  getPopularMovies()
-    .then(setMovies)
-    .catch((err) => setError(err.message))
-    .finally(() => setLoading(false))
-}, [genre, year, q])
+  }, [genre, year, q, trending])
 
 
   return (
