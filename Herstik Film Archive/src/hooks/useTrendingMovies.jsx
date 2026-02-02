@@ -24,12 +24,15 @@ export default function useTrendingMovies() {
         setLoading(true)
         setError(null)
 
-        const results = await getTrendingMovies()
-        const mapped = results.map(mapMovie)
+        // 🔹 NEW: destructure movies from result object
+        const { movies: rawMovies } = await getTrendingMovies("week", 0)
+        const mapped = rawMovies.map(mapMovie)
 
         if (!cancelled) setMovies(mapped)
       } catch (err) {
-        if (!cancelled) setError(err?.message ?? "Something went wrong")
+        if (!cancelled) {
+          setError(err?.message ?? "Something went wrong")
+        }
       } finally {
         if (!cancelled) setLoading(false)
       }

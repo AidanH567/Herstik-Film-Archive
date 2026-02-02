@@ -1,11 +1,18 @@
 import * as React from "react"
 import { useSearchParams } from "react-router-dom"
-import { getPopularMovies, getMoviesByGenre, getMoviesByYear, searchMovies, getTrendingMovies } from "../services/tmdb"
+import {
+  getPopularMovies,
+  getMoviesByGenre,
+  getMoviesByYear,
+  searchMovies,
+  getTrendingMovies
+} from "../services/tmdb"
 import MovieCard from "../components/MovieCard"
 
 export default function FilmsBrowse() {
   const [searchParams] = useSearchParams()
-  const genre = searchParams.get("genre") // only genre filter for now
+
+  const genre = searchParams.get("genre")
   const year = searchParams.get("year")
   const q = searchParams.get("q")
   const trending = searchParams.get("trending")
@@ -14,88 +21,96 @@ export default function FilmsBrowse() {
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
+  const [pageGroup, setPageGroup] = React.useState(0)
+  const [hasMore, setHasMore] = React.useState(true)
+
+  // Reset pagination when filters change
+  React.useEffect(() => {
+    setPageGroup(0)
+  }, [genre, year, q, trending])
+
   React.useEffect(() => {
     setLoading(true)
     setError(null)
 
-    // If both genre and year are selected
-    if (genre && year) {
-      getMoviesByGenreAndYear(genre, year) // we'll define this function in services
-        .then(setMovies)
-        .catch((err) => setError(err.message))
-        .finally(() => setLoading(false))
-      return
+    const fetchMovies = async () => {
+      try {
+        let result
+
+        if (genre && year) {
+          result = await getMoviesByGenreAndYear(
+            genre,
+            year,
+            pageGroup
+          )
+        } else if (genre) {
+          result = await getMoviesByGenre(genre, pageGroup)
+        } else if (q) {
+          result = await searchMovies(q, pageGroup)
+        } else if (year) {
+          result = await getMoviesByYear(year, pageGroup)
+        } else if (trending) {
+          result = await getTrendingMovies(trending, pageGroup)
+        } else {
+          result = await getPopularMovies(pageGroup)
+        }
+
+        setMovies(result.movies)
+        setHasMore(result.hasMore)
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
     }
 
-    // Only genre selected
-    if (genre) {
-      getMoviesByGenre(genre)
-        .then(setMovies)
-        .catch((err) => setError(err.message))
-        .finally(() => setLoading(false))
-      return
-    }
-
-    if (q) {
-      searchMovies(q)
-        .then(setMovies)
-        .catch((err) => setError(err.message))
-        .finally(() => setLoading(false))
-      return
-    }
-
-    // Only year selected
-    if (year) {
-      getMoviesByYear(year)
-        .then(setMovies)
-        .catch((err) => setError(err.message))
-        .finally(() => setLoading(false))
-      return
-    }
-
-    if (trending) {
-      getTrendingMovies(trending)
-        .then(setMovies)
-        .catch((err) => setError(err.message))
-        .finally(() => setLoading(false))
-      return
-    }
-
-    // No filters → show popular
-    getPopularMovies()
-      .then(setMovies)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [genre, year, q, trending])
-
+    fetchMovies()
+  }, [genre, year, q, trending, pageGroup])
 
   return (
     <div className="films-browse">
       <h1>Browse Films</h1>
 
-      {/* Active filter */}
-      <p>
-        {genre
-          ? `Genre filter active (ID: ${genre})`
-          : "Showing popular films"}
-      </p>
-
-      {/* Loading / error states */}
       {loading && <p>Loading movies...</p>}
       {error && <p>Error: {error}</p>}
 
-      {/* Movies grid */}
       {!loading && !error && (
-        <div className="poster-row">
-          {movies.map((movie) => {
-            // Build poster URL for MovieCard
-            const poster = movie.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : "/placeholder.png" // fallback if no poster
+        <>
+          <div className="browse-grid">
+            {movies.map((movie) => {
+              const poster = movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : "/placeholder.png"
 
-            return <MovieCard key={movie.id} movie={{ ...movie, poster }} />
-          })}
-        </div>
+              return (
+                <MovieCard
+                  key={movie.id}
+                  movie={{ ...movie, poster }}
+                />
+              )
+            })}
+          </div>
+
+          <div className="pagination">
+            <button
+              disabled={pageGroup === 0 || loading}
+              onClick={() =>
+                setPageGroup((p) => Math.max(0, p - 1))
+              }
+            >
+              ← Previous
+            </button>
+
+            <span>Page {pageGroup + 1}</span>
+
+            <button
+              disabled={!hasMore || loading}
+              onClick={() => setPageGroup((p) => p + 1)}
+            >
+              Next →
+            </button>
+          </div>
+        </>
       )}
     </div>
   )
