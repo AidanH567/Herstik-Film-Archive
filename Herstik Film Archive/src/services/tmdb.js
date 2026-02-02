@@ -35,7 +35,13 @@ async function fetchPageGroup(baseUrl, pageGroup = 0) {
 
   const data = await Promise.all(responses.map((res) => res.json()))
 
-  const movies = data.flatMap((p) => p.results).slice(0, 72)
+  const movies = Array.from(
+    new Map(
+      data
+        .flatMap((p) => p.results)
+        .map((movie) => [movie.id, movie])
+    ).values()
+  ).slice(0, 72)
 
   const maxTotalPages = Math.max(
     ...data.map((p) => p.total_pages || 0)
