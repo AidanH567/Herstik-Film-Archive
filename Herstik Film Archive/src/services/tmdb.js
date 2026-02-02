@@ -76,7 +76,7 @@ export async function getTrendingMovies(timeframe = "week", pageGroup = 0) {
       const to = today.toISOString().split("T")[0]
       const from = lastYear.toISOString().split("T")[0]
 
-      baseUrl = `${BASE_URL}/discover/movie?sort_by=popularity.desc&primary_release_date.gte=${from}&primary_release_date.lte=${to}&vote_count.gte=500`
+      baseUrl = `${BASE_URL}/discover/movie?sort_by=popularity.desc&primary_release_date.gte=${from}&primary_release_date.lte=${to}&vote_count.gte=400`
       break
     }
 
