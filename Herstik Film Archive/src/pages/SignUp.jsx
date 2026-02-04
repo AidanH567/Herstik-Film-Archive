@@ -24,7 +24,7 @@ const Signup = () => {
         return new Error(signUpError);
       }
       if (success && data?.session) {
-        navigate('/home');
+        navigate('/signin');
         return null;
       }
       return null;

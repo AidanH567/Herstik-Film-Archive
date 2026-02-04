@@ -1,10 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-
-
 import Home from '../pages/Home.jsx';
 import List from '../pages/List.jsx';
 import Journal from '../pages/Journal.jsx';
-import Login from '../pages/Login.jsx';
 import Reviews from '../pages/Reviews.jsx';
 import AppLayout from './AppLayout.jsx';
 import NotFound from '../pages/NotFound.jsx';
@@ -22,7 +19,7 @@ export default function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="list" element={<List />} />
         <Route path="journal" element={<Journal />} />
-        <Route path="login" element={<Login />} />
+        <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="reviews" element={<Reviews />} />
 
