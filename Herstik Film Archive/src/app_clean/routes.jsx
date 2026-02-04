@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home.jsx';
-import List from '../pages/List.jsx';
+import Lists from '../pages/Lists.jsx';
 import Journal from '../pages/Journal.jsx';
 import Reviews from '../pages/Reviews.jsx';
 import AppLayout from './AppLayout.jsx';
@@ -18,7 +18,7 @@ export default function AppRoutes() {
         <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<Home />} />
-        <Route path="list" element={<List />} />
+        <Route path="lists" element={<Lists />} />
         <Route path="journal" element={<Journal />} />
         <Route path="signin" element={<Signin/>} />
         <Route path="signup" element={<SignUp />} />
