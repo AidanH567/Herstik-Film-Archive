@@ -10,6 +10,7 @@ import FilmDetail from '../pages/FilmDetail.jsx';
 import FilmsBrowse from '../pages/FilmsBrowse.jsx';
 import FilmsLayout from './FilmLayout.jsx';
 import SignUp from '../pages/SignUp.jsx';
+import Signin from '../pages/Signin.jsx';
 
 
 export default function AppRoutes() {
@@ -19,7 +20,7 @@ export default function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="list" element={<List />} />
         <Route path="journal" element={<Journal />} />
-        <Route path="signin" element={<Signin />} />
+        <Route path="signin" element={<Signin/>} />
         <Route path="signup" element={<SignUp />} />
         <Route path="reviews" element={<Reviews />} />
 
