@@ -82,15 +82,14 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
-  const signUpNewUser = async (email, password, name, accountType) => {
+  const signUpNewUser = async (email, password, name) => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email.toLowerCase(),
         password: password,
         options: {
           data: {
-            name: name,
-            account_type: accountType,
+            name: name
           },
         },
       });

@@ -5,7 +5,6 @@ import Home from '../pages/Home.jsx';
 import List from '../pages/List.jsx';
 import Journal from '../pages/Journal.jsx';
 import Login from '../pages/Login.jsx';
-import SignUp from '../pages/SignUp.jsx';
 import Reviews from '../pages/Reviews.jsx';
 import AppLayout from './AppLayout.jsx';
 import NotFound from '../pages/NotFound.jsx';
@@ -13,6 +12,7 @@ import Films from '../pages/Films.jsx';
 import FilmDetail from '../pages/FilmDetail.jsx';
 import FilmsBrowse from '../pages/FilmsBrowse.jsx';
 import FilmsLayout from './FilmLayout.jsx';
+import SignUp from '../pages/SignUp.jsx';
 
 
 export default function AppRoutes() {

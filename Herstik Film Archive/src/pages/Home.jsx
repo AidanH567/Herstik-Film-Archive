@@ -5,6 +5,8 @@ import ReviewCard from "../components/RecentReviews.jsx"
 import "../App.css"
 import useTrendingMovies from "../hooks/useTrendingMovies"
 
+
+
 export default function Home() {
   const { movies, loading, error } = useTrendingMovies()
 
