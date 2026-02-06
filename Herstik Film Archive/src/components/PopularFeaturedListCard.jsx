@@ -1,13 +1,13 @@
 import useTrendingMovies from "../hooks/useTrendingMovies";
 
-export default function FeaturedListCard({ list }) {
+export default function PopularFeaturedListCard({ list }) {
     const { movies, loading, error } = useTrendingMovies()
 
 
     return (
-        <div className="featured-list-card">
-            <div className="list-collage">
-                {movies.slice(0, 5).map((movie) => (
+        <div className="popular-list-card">
+            <div className="popular-list-collage">
+                {movies.slice(0, 2).map((movie) => (
                     <img
                         key={movie.id}
                         src={movie.poster}
@@ -15,7 +15,7 @@ export default function FeaturedListCard({ list }) {
                     />
                 ))}
             </div>
-            <h4>Movies i want to watch the most</h4>
+            <h1>Movies i want to watch the most</h1>
             <div className="featured-list-profile">
                 <img src="../public/profile-photo.jpg" alt="Profile" className="profile-photo" />
                 <span>Created by <strong>Dave</strong></span>
