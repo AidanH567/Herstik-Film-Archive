@@ -410,3 +410,13 @@
 .popular-lists-section {
   margin-top: 75px;
 }
+.recently-added-card {
+  margin-top: 75px;
+  display: flex;
+}
+.recently-added-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}

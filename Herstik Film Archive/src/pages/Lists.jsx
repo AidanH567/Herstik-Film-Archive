@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import FeaturedListCard from '../components/featuredListCard';
 import PopularFeaturedListCard from '../components/PopularFeaturedListCard';
+import RecentlyAddedCard from '../components/RecentlyAddedCard';
 
 export default function Lists() {
   return <div className="list-page">
@@ -25,6 +26,13 @@ export default function Lists() {
         <PopularFeaturedListCard />
         <PopularFeaturedListCard />
         <PopularFeaturedListCard />
+      </div>
+    </section>
+    <section className="recently-added-section">
+      <h2>Recently Added</h2>
+      <hr />
+      <div className="recently-added-grid">
+        <RecentlyAddedCard />
       </div>
     </section>
   </div>;
