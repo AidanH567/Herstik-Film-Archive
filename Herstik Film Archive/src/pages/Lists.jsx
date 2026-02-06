@@ -7,7 +7,7 @@ export default function Lists() {
   return <div className="list-page">
     <section className="create-list-section">
       <h1>Collect, curate, and share. Lists are the perfect way to group films.</h1>
-      <Link className="create-list-link" to="/create-list">Create a new list</Link>
+      <Link className="create-list-link" to="/lists/new">Create a new list</Link>
     </section>
     
     <section className="featured-lists-section">
