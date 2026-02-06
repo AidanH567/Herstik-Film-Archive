@@ -368,6 +368,7 @@
 ========================= */
 .popular-list-card{
   width: 100%;
+  margin-top: 10px
 }
 
 .popular-list-card > h4{
@@ -440,4 +441,35 @@ hr {
   border: none;
   height: 1px;
   background-color: #242a3b;
+}
+/* =========================
+   Create List Section
+========================= */
+.create-list-section {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.create-list-link {
+  display: inline-block;
+  padding: 10px 18px;
+
+  background-color: #1b2233; /* light navy / grey-blue */
+  color: #c7cbd6;            /* softer grey text */
+
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  border-radius: 8px;
+  border: none;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.create-list-link:hover {
+  background-color: #242a3b; /* slightly darker on hover */
+  color: #ffffff;
 }
