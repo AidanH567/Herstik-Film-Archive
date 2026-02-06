@@ -5,8 +5,9 @@ export default function RecentlyAddedCard({ list }) {
 
 
     return (
+        <>
         <div className="recently-added-card">
-            <div className="list-collage">
+            <div className="list-collage-recently-added">
                 {movies.slice(0, 5).map((movie) => (
                     <img
                         key={movie.id}
@@ -22,9 +23,11 @@ export default function RecentlyAddedCard({ list }) {
                     <span>Created by <strong>Dave</strong></span>
                 </div>
                 <p>A quiet, character-driven story that follows a protagonist at a
-                    turning point in their life, where small choices carry unexpected
-                    consequences and personal relationships are put to the test.</p>
+                    turning point in their life.</p>
             </div>
 
-        </div>);
+        </div>
+        <hr />
+        </>);
+        
 }

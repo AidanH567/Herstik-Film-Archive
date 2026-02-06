@@ -30,8 +30,10 @@ export default function Lists() {
     </section>
     <section className="recently-added-section">
       <h2>Recently Added</h2>
-      <hr />
       <div className="recently-added-grid">
+        <hr />
+        <RecentlyAddedCard />
+        <RecentlyAddedCard />
         <RecentlyAddedCard />
       </div>
     </section>

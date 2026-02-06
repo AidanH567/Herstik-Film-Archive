@@ -411,7 +411,7 @@
   margin-top: 75px;
 }
 .recently-added-card {
-  margin-top: 75px;
+  margin-top: 45px;
   display: flex;
 }
 .recently-added-text{
@@ -419,4 +419,25 @@
   flex-direction: column;
   justify-content: center;
   gap: 10px;
+}
+.list-collage-recently-added {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  width: 300px;
+  aspect-ratio: 7 / 3;
+  overflow: hidden;
+  border-radius: 6px;
+  margin-right: 20px;
+}
+
+.list-collage-recently-added img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+hr {
+  border: none;
+  height: 1px;
+  background-color: #242a3b;
 }
