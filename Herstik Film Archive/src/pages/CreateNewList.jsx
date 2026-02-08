@@ -23,6 +23,7 @@ export default function CreateNewList() {
     </section>
     <form onSubmit={(e) => e.preventDefault()}>
 
+    <div className="details-box">
       <section className="create-new-list-details">
         <label htmlFor="list-name">Name</label>
         <input type="text" id="list-name" name="list-name" required />
@@ -34,11 +35,13 @@ export default function CreateNewList() {
         <input type="text" id="list-view-premission" name="list-view-premission" required />
 
       </section>
+      
 
       <section className="list-description">
         <label htmlFor="list-description">Description</label>
         <textarea id="list-description" name="list-description" rows="5" required></textarea>
       </section>
+      </div>
 
       <section className="create-new-list-actions">
         <span>Add a Film</span>
