@@ -19,6 +19,7 @@ import Signin from '../pages/Signin.jsx';
 import ListsLayout from './ListsLayout.jsx';
 // import ListDetail from '../pages/ListDetail.jsx';
 import CreateNewList from '../pages/CreateNewList.jsx';
+import ListDetailPage from '../pages/ListDetailPage.jsx';
 
 export default function AppRoutes() {
   return (
@@ -30,7 +31,7 @@ export default function AppRoutes() {
         <Route path="lists" element={<ListsLayout />}>
           <Route index element={<Lists />} />
           <Route path="new" element={<CreateNewList />} />
-          {/* <Route path=":id" element={<ListDetail />} /> */}
+          <Route path=":id" element={<ListDetailPage />} />
         </Route>
 
         <Route path="journal" element={<Journal />} />
