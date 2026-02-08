@@ -739,3 +739,28 @@ hr {
   background-color: #3a4154;
   color: #e05d5d; /* subtle red warning */
 }
+
+
+/* =========================
+   LIST DETAIL PAGE
+========================= */
+
+.list-detail-box{
+  width: 70%;
+}
+.list-detail-movies-grid{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 2rem auto;
+  
+}
+.list-detail-movie
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
