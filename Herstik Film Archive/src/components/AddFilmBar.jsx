@@ -21,7 +21,7 @@ export default function AddFilmBar({ onAddFilm }) {
 
         console.log("TMDB results:", movies)
 
-        setResults(movies.movies.slice(0, 5))
+        setResults(movies.movies.slice(0, 20))
       } catch (err) {
         console.error("Search error:", err)
       } finally {
@@ -44,28 +44,21 @@ export default function AddFilmBar({ onAddFilm }) {
       {loading && <p>Searching…</p>}
 
       {results.length > 0 && (
-        <ul
-          style={{
-            background: "#111",
-            color: "#fff",
-            listStyle: "none",
-            padding: "8px",
-            marginTop: "4px",
-            borderRadius: "6px",
-          }}
-        >
+        <ul className="add-film-dropdown">
           {results.map((movie) => (
             <li
               key={movie.id}
-              style={{ cursor: "pointer", padding: "4px 0" }}
+              className="add-film-dropdown-item"
               onClick={() => {
-                console.log("Clicked movie:", movie)
                 onAddFilm(movie)
                 setQuery("")
                 setResults([])
               }}
             >
-              {movie.title} ({movie.release_date?.slice(0, 4)})
+              <strong>{movie.title}</strong>
+              <span className="year">
+                {movie.release_date?.slice(0, 4)}
+              </span>
             </li>
           ))}
         </ul>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AddFilmBar from "../components/AddFilmBar";
+import { Link } from "react-router-dom";
 
 export default function CreateNewList() {
   const [selectedFilms, setSelectedFilms] = useState([])
@@ -16,6 +17,13 @@ export default function CreateNewList() {
       return [...prev, film]
     })
   }
+
+  const handleRemoveFilm = (filmId) => {
+    setSelectedFilms((prev) =>
+      prev.filter((film) => film.id !== filmId)
+    )
+  }
+
   return <div className="create-new-list-page">
     <section>
       <h1>New List</h1>
@@ -23,30 +31,33 @@ export default function CreateNewList() {
     </section>
     <form onSubmit={(e) => e.preventDefault()}>
 
-    <div className="details-box">
-      <section className="create-new-list-details">
-        <label htmlFor="list-name">Name</label>
-        <input type="text" id="list-name" name="list-name" required />
+      <div className="details-box">
+        <section className="create-new-list-details">
+          <label htmlFor="list-name">Name</label>
+          <input type="text" id="list-name" name="list-name" required />
 
-        <label htmlFor="list-tags">Tags</label>
-        <input type="text" id="list-tags" name="list-tags" required />
+          <label htmlFor="list-tags">Tags</label>
+          <input type="text" id="list-tags" name="list-tags" required />
 
-        <label htmlFor="list-view-premission">Who can view</label>
-        <input type="text" id="list-view-premission" name="list-view-premission" required />
+          <label htmlFor="list-view-premission">Who can view</label>
+          <input type="text" id="list-view-premission" name="list-view-premission" required />
 
-      </section>
-      
+        </section>
 
-      <section className="list-description">
-        <label htmlFor="list-description">Description</label>
-        <textarea id="list-description" name="list-description" rows="5" required></textarea>
-      </section>
+
+        <section className="list-description">
+          <label htmlFor="list-description">Description</label>
+          <textarea id="list-description" name="list-description" rows="5" required></textarea>
+        </section>
       </div>
 
       <section className="create-new-list-actions">
-        <span>Add a Film</span>
+        <span className="add-film-pill">Add a Film</span>
         <AddFilmBar onAddFilm={handleAddFilm} />
-        <button type="submit">Create List</button>
+        <Link className="cancel-btn" to="/">Cancel</Link>
+        <button className="create-list-btn" type="submit">
+          Create List
+        </button>
       </section>
 
       <section className="selected-films">
@@ -63,6 +74,7 @@ export default function CreateNewList() {
 
               return (
                 <li key={film.id} className="selected-film-item">
+                  <div className="selected-film-box">
                   <img
                     src={poster}
                     alt={film.title}
@@ -71,10 +83,18 @@ export default function CreateNewList() {
 
                   <div className="selected-film-info">
                     <strong>{film.title}</strong>
-                    <span>
+                    <span style={{ color: "#686f81" }}>
                       {film.release_date?.slice(0, 4)}
                     </span>
                   </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="remove-film-btn"
+                    onClick={() => handleRemoveFilm(film.id)}
+                  >
+                    🗑️
+                  </button>
                 </li>
               )
             })}

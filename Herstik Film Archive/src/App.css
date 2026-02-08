@@ -511,3 +511,231 @@ hr {
 .create-new-list-details input:focus{
   background-color: white;
 }
+/* =========================
+   CREATE LIST – ACTION BAR
+========================= */
+
+.create-new-list-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 30px;
+  padding: 12px 16px;
+
+  background-color: #1b2233;
+  border-radius: 10px;
+}
+
+
+/* =========================
+   ADD A FILM (GREEN PILL)
+========================= */
+
+.add-film-pill {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  background-color: #2dd36f;
+  color: #0b1b12;
+
+  border-radius: 999px;
+  cursor: default;
+  user-select: none;
+}
+
+
+/* =========================
+   SEARCH INPUT (AddFilmBar)
+========================= */
+
+.create-new-list-actions input[type="text"] {
+  background-color: #2d3342;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+
+  color: #c7cbd6;
+  font-size: 0.95rem;
+  min-width: 220px;
+}
+
+.create-new-list-actions input[type="text"]:focus {
+  background-color: #ffffff;
+  color: #111;
+  outline: none;
+}
+
+
+/* =========================
+   CANCEL BUTTON (GREY)
+========================= */
+
+.cancel-btn {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  background-color: #2d3342;
+  color: #c7cbd6;
+
+  border-radius: 6px;
+  text-decoration: none;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #3a4154;
+  color: #ffffff;
+}
+
+
+/* =========================
+   CREATE LIST BUTTON (GREEN)
+========================= */
+
+.create-list-btn {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  background-color: #2dd36f;
+  color: #0b1b12;
+
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.create-list-btn:hover {
+  background-color: #26c165;
+}
+/* Dropdown container */
+.add-film-dropdown {
+  position: absolute;
+  top: calc(100% + 6px); /* sits just under input */
+  left: 0;
+  right: 0;
+
+  background: #111;
+  color: #fff;
+
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  max-height: 260px;          /* 👈 controls height */
+  overflow-y: auto;           /* 👈 enables scrollbar */
+
+  z-index: 1000;              /* 👈 floats above page */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Individual result */
+.add-film-dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Hover state */
+.add-film-dropdown-item:hover {
+  background: #1b2233;
+}
+
+/* Year styling */
+.add-film-dropdown-item .year {
+  opacity: 0.6;
+  font-size: 0.85rem;
+}
+.add-film-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.add-film-dropdown::-webkit-scrollbar-track {
+  background: #0e1320;
+  border-radius: 8px;
+}
+
+.add-film-dropdown::-webkit-scrollbar-thumb {
+  background: #2d3342;
+  border-radius: 8px;
+}
+
+.add-film-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #3a4256;
+}
+
+
+/* =========================
+   SECTION: SELECTED FILMS (SHOWING UNDER ADD FILM BAR)
+========================= */
+.selected-films-list{
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  }
+.selected-film-poster {
+  width: 50px;
+}
+.selected-film-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  border: #111a2e;
+  border-style: solid;
+  align-items: center;
+}
+.selected-film-info {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.selected-films{
+  margin-top: 20px;
+}
+.selected-film-box{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.remove-film-btn {
+  height: 100%;
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  width: 34px;
+  height: 34px;
+
+  background-color: #2d3342;   /* light grey / blue */
+  border: none;
+  border-radius: 8px;
+
+  color: #9aa4b2;              /* muted icon color */
+  font-size: 16px;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.1s ease;
+}
+.remove-film-btn:hover {
+  background-color: #3a4154;
+  color: #e05d5d; /* subtle red warning */
+}
