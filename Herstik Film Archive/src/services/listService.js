@@ -1,4 +1,4 @@
-import { supabase } from "../supabaseClient";
+import  {supabase}  from "../supabase-client";
 
 export async function createList(name) {
   const {
@@ -23,3 +23,14 @@ export async function createList(name) {
 
   return data;
 }
+
+export async function getMyLists() {
+  const { data, error } = await supabase
+    .from("lists")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+

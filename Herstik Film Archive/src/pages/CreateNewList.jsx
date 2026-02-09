@@ -1,9 +1,19 @@
 import { useState } from "react";
 import AddFilmBar from "../components/AddFilmBar";
 import { Link } from "react-router-dom";
+import { createList } from "../services/listService";
 
 export default function CreateNewList() {
   const [selectedFilms, setSelectedFilms] = useState([])
+
+  async function handleCreateList() {
+    try {
+      const list = await createList("Watch Later");
+      console.log("Created list:", list);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 
   const handleAddFilm = (film) => {
     console.log("handleAddFilm called with:", film)
@@ -25,6 +35,7 @@ export default function CreateNewList() {
   }
 
   return <div className="create-new-list-page">
+    <button onClick={handleCreateList}>Create List</button>
     <section>
       <h1>New List</h1>
       <hr />
@@ -75,18 +86,18 @@ export default function CreateNewList() {
               return (
                 <li key={film.id} className="selected-film-item">
                   <div className="selected-film-box">
-                  <img
-                    src={poster}
-                    alt={film.title}
-                    className="selected-film-poster"
-                  />
+                    <img
+                      src={poster}
+                      alt={film.title}
+                      className="selected-film-poster"
+                    />
 
-                  <div className="selected-film-info">
-                    <strong>{film.title}</strong>
-                    <span style={{ color: "#686f81" }}>
-                      {film.release_date?.slice(0, 4)}
-                    </span>
-                  </div>
+                    <div className="selected-film-info">
+                      <strong>{film.title}</strong>
+                      <span style={{ color: "#686f81" }}>
+                        {film.release_date?.slice(0, 4)}
+                      </span>
+                    </div>
                   </div>
                   <button
                     type="button"
