@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }) => {
       try {
         const { data, error } = await supabase
           .from('user_profiles')
-          .select('id, name, account_type');
+          .select('id, name');
         if (error) {
           throw error;
         }
