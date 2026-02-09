@@ -764,3 +764,46 @@ hr {
   align-items: center;
   flex-direction: column;
 }
+
+/* =========================
+   MyLISTS PAGE
+========================= */
+
+.my-lists-reviews{
+  width: 80%;
+}
+.my-lists-page{
+  display: flex;
+  flex-direction: row;
+}
+.my-lists-sidebar{
+  background-color: #6382ae;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  margin-left: 40px;
+  width: 25%;
+  border-radius: 5px;
+}
+.my-lists-sidebar a {
+  text-decoration: none;      /* remove underline */
+  color: #cacbcd;             /* grey text */
+  font-weight: 500;
+}
+
+/* visited state (removes purple) */
+.my-lists-sidebar a:visited {
+  color: #4a5163;
+}
+
+/* hover state */
+.my-lists-sidebar a:hover {
+  color: #a3a5a7;
+}
+
+/* optional: active click state */
+.my-lists-sidebar a:active {
+  color: #ffffff;
+}

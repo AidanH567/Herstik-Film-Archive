@@ -20,6 +20,7 @@ import ListsLayout from './ListsLayout.jsx';
 // import ListDetail from '../pages/ListDetail.jsx';
 import CreateNewList from '../pages/CreateNewList.jsx';
 import ListDetailPage from '../pages/ListDetailPage.jsx';
+import MyLists from '../pages/MyLists.jsx';
 
 export default function AppRoutes() {
   return (
@@ -32,6 +33,7 @@ export default function AppRoutes() {
           <Route index element={<Lists />} />
           <Route path="new" element={<CreateNewList />} />
           <Route path=":id" element={<ListDetailPage />} />
+          <Route path="my-lists" element={<MyLists />} />
         </Route>
 
         <Route path="journal" element={<Journal />} />
