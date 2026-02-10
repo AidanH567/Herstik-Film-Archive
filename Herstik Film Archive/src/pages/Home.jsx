@@ -4,12 +4,15 @@ import MovieCard from "../components/MovieCard.jsx"
 import ReviewCard from "../components/RecentReviews.jsx"
 import "../App.css"
 import useTrendingMovies from "../hooks/useTrendingMovies"
+import { removeMovieFromList } from "../services/listService.js"
 
 
 
 export default function Home() {
   const { movies, loading, error } = useTrendingMovies()
 
+
+  //TEST CODE - REMOVE LATER
   const reviews = [
     {
       id: 1,
@@ -76,6 +79,23 @@ export default function Home() {
       createdAt: "2025-01-02",
     },
   ]
+
+
+  // async function testRemoveMovie() {
+  //   const listId = "77731688-8fe8-48ba-a56e-e5d970ae4643";
+  //   const movieId = "2940fcb0-3f18-40d5-9e33-6149a818e689"; // from previous result
+
+  //   try {
+  //     await removeMovieFromList(listId, movieId);
+  //     console.log("Movie removed");
+  //   } catch (err) {
+  //     console.error("Remove failed:", err.message);
+  //   }
+  // }
+
+  // testRemoveMovie();
+
+
 
   return (
     <div className="home">
