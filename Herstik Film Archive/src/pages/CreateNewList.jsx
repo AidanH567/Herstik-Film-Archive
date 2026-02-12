@@ -8,47 +8,47 @@ export default function CreateNewList() {
   const [selectedFilms, setSelectedFilms] = useState([])
 
   // Test data and functions for development purposes
-//   const testMovie = {
-//     tmdb_id: 550, // Fight Club
-//     title: "Fight Club",
-//     poster_path: "/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-//     release_year: 1999
-//   };
+  const testMovie = {
+    tmdb_id: 550, // Fight Club
+    title: "Fight Club",
+    poster_path: "/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
+    release_year: 1999
+  };
 
-//   async function handleCreateList() {
-//     try {
-//       const list = await createList("Watch Later");
-//       console.log("Created list:", list);
-//     } catch (err) {
-//       console.error(err.message);
-//     }
-//   }
+  async function handleCreateList() {
+    try {
+      const list = await createList("Watch Later");
+      console.log("Created list:", list);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 
-//   async function testAddMovie() {
-//     const listId = "77731688-8fe8-48ba-a56e-e5d970ae4643";
+  async function testAddMovie() {
+    const listId = "77731688-8fe8-48ba-a56e-e5d970ae4643";
 
-//     try {
-//       const movie = await addMovieToList(listId, testMovie);
-//       console.log("Movie added:", movie);
-//     } catch (err) {
-//       console.error("Add movie failed:", err.message);
-//     }
-//   }
+    try {
+      const movie = await addMovieToList(listId, testMovie);
+      console.log("Movie added:", movie);
+    } catch (err) {
+      console.error("Add movie failed:", err.message);
+    }
+  }
 
-//   testAddMovie();
+  testAddMovie();
 
-//   async function testGetMovies() {
-//   const listId = "77731688-8fe8-48ba-a56e-e5d970ae4643";
+  async function testGetMovies() {
+  const listId = "77731688-8fe8-48ba-a56e-e5d970ae4643";
 
-//   try {
-//     const movies = await getMoviesForList(listId);
-//     console.log("Movies in list:", movies);
-//   } catch (err) {
-//     console.error("Fetch failed:", err.message);
-//   }
-// }
+  try {
+    const movies = await getMoviesForList(listId);
+    console.log("Movies in list:", movies);
+  } catch (err) {
+    console.error("Fetch failed:", err.message);
+  }
+}
 
-// testGetMovies();
+testGetMovies();
 
   // END OF TEST CODE
 

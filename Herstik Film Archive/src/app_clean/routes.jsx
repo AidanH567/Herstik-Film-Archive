@@ -32,9 +32,10 @@ export default function AppRoutes() {
         <Route path="lists" element={<ListsLayout />}>
           <Route index element={<Lists />} />
           <Route path="new" element={<CreateNewList />} />
-          <Route path=":id" element={<ListDetailPage />} />
-          <Route path="my-lists" element={<MyLists />} />
+          <Route path=":listId" element={<ListDetailPage />} />
         </Route>
+        
+        <Route path="my-lists" element={<MyLists />} />
 
         <Route path="journal" element={<Journal />} />
         <Route path="signin" element={<Signin />} />

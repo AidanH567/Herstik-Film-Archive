@@ -25,7 +25,7 @@ export default function Header() {
           <NavLink to="/films">Films</NavLink>
           <NavLink to="/journal">Journal</NavLink>
           <NavLink to="/lists">Lists</NavLink>
-          <NavLink to="/lists/my-lists">My Lists</NavLink>
+          <NavLink to="/my-lists">My Lists</NavLink>
 
           {!session ? (
             <>

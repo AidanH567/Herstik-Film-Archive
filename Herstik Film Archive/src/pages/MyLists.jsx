@@ -35,7 +35,10 @@ export default function MyLists() {
 
       <ul>
         {lists.map((list) => (
+          <>
           <li key={list.id}>{list.name}</li>
+          <Link to={`/lists/${list.id}`}>{list.name}</Link>
+          </>
         ))}
       </ul>
     </div>
