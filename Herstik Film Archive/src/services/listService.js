@@ -125,3 +125,13 @@ export async function deleteList(listId) {
 
   if (error) throw error;
 }
+
+export async function updateList(listId, updates) {
+
+  const { error } = await supabase
+    .from("lists")
+    .update(updates)
+    .eq("id", listId);
+
+  if (error) throw error;
+}

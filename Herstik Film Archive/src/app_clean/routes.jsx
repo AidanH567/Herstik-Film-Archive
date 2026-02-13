@@ -21,6 +21,7 @@ import ListsLayout from './ListsLayout.jsx';
 import CreateNewList from '../pages/CreateNewList.jsx';
 import ListDetailPage from '../pages/ListDetailPage.jsx';
 import MyLists from '../pages/MyLists.jsx';
+import EditListPage from '../pages/EditListPage.jsx';
 
 export default function AppRoutes() {
   return (
@@ -33,6 +34,7 @@ export default function AppRoutes() {
           <Route index element={<Lists />} />
           <Route path="new" element={<CreateNewList />} />
           <Route path=":listId" element={<ListDetailPage />} />
+          <Route path=":listId/edit" element={<EditListPage />} />
         </Route>
         
         <Route path="my-lists" element={<MyLists />} />

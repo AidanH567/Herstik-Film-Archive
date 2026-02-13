@@ -87,15 +87,22 @@ export default function ListCard({ list, onDelete }) {
                     )}
                 </div>
 
+                <Link
+                    to={`/lists/${list.id}/edit`}
+                    className="edit-list-btn"
+                >
+                    ✏ Edit
+                </Link>
+
                 <button
-                        className="delete-film-btn"
-                        onClick={handleDeleteList}
-                    >
-                        🗑
-                    </button>
+                    className="delete-film-btn"
+                    onClick={handleDeleteList}
+                >
+                    🗑
+                </button>
 
             </div>
-            
+
             <hr />
         </>);
 
