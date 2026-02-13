@@ -1,6 +1,7 @@
 import  {supabase}  from "../supabase-client";
 
-export async function createList(name) {
+export async function createList(listData) {
+
   const {
     data: { user },
     error: userError
@@ -12,10 +13,14 @@ export async function createList(name) {
 
   const { data, error } = await supabase
     .from("lists")
-    .insert({
-      name,
-      user_id: user.id
-    })
+    .insert([
+      {
+        name: listData.name,
+        description: listData.description,
+        visibility: listData.visibility,
+        user_id: user.id
+      }
+    ])
     .select()
     .single();
 
@@ -37,9 +42,8 @@ export async function getMyLists() {
 
 
 export async function addMovieToList(listId, movie) {
-  // movie = { tmdb_id, title, poster_path, release_year }
 
-  // 1. Upsert movie (insert if not exists)
+  // 1️⃣ Upsert movie
   const { data: movieRow, error: movieError } = await supabase
     .from("movies")
     .upsert(
@@ -56,7 +60,7 @@ export async function addMovieToList(listId, movie) {
 
   if (movieError) throw movieError;
 
-  // 2. Link movie to list
+  // 2️⃣ Link movie → list
   const { error: linkError } = await supabase
     .from("list_movies")
     .insert({
@@ -64,10 +68,14 @@ export async function addMovieToList(listId, movie) {
       movie_id: movieRow.id
     });
 
-  if (linkError) throw linkError;
+  // ⭐ Ignore duplicate error (VERY IMPORTANT)
+  if (linkError && linkError.code !== "23505") {
+    throw linkError;
+  }
 
   return movieRow;
 }
+
 
 export async function getMoviesForList(listId) {
   const { data, error } = await supabase

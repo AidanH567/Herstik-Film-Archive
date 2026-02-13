@@ -1,154 +1,183 @@
 import { useState } from "react";
 import AddFilmBar from "../components/AddFilmBar";
-import { Link } from "react-router-dom";
-import { createList, addMovieToList, getMoviesForList } from "../services/listService";
-
+import { Link, useNavigate } from "react-router-dom";
+import { createList, addMovieToList } from "../services/listService";
 
 export default function CreateNewList() {
-  const [selectedFilms, setSelectedFilms] = useState([])
 
-  // Test data and functions for development purposes
-  const testMovie = {
-    tmdb_id: 550, // Fight Club
-    title: "Fight Club",
-    poster_path: "/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-    release_year: 1999
-  };
+  const navigate = useNavigate();
 
-  async function handleCreateList() {
-    try {
-      const list = await createList("Watch Later");
-      console.log("Created list:", list);
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
+  const [selectedFilms, setSelectedFilms] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  async function testAddMovie() {
-    const listId = "77731688-8fe8-48ba-a56e-e5d970ae4643";
-
-    try {
-      const movie = await addMovieToList(listId, testMovie);
-      console.log("Movie added:", movie);
-    } catch (err) {
-      console.error("Add movie failed:", err.message);
-    }
-  }
-
-  testAddMovie();
-
-  async function testGetMovies() {
-  const listId = "77731688-8fe8-48ba-a56e-e5d970ae4643";
-
-  try {
-    const movies = await getMoviesForList(listId);
-    console.log("Movies in list:", movies);
-  } catch (err) {
-    console.error("Fetch failed:", err.message);
-  }
-}
-
-testGetMovies();
-
-  // END OF TEST CODE
-
+  // ✅ Add film handler
   const handleAddFilm = (film) => {
-    console.log("handleAddFilm called with:", film)
+    console.log("handleAddFilm called with:", film);
 
     setSelectedFilms((prev) => {
-      if (prev.some((f) => f.id === film.id)) {
-        console.log("Film already added")
-        return prev
+
+      if (prev.some((f) => f.tmdb_id === film.tmdb_id)) {
+        console.log("Film already added");
+        return prev;
       }
 
-      return [...prev, film]
-    })
-  }
+      return [...prev, film];
+    });
+  };
 
+  // ✅ Remove film handler
   const handleRemoveFilm = (filmId) => {
     setSelectedFilms((prev) =>
-      prev.filter((film) => film.id !== filmId)
-    )
+      prev.filter((film) => film.tmdb_id !== filmId)
+    );
+  };
+
+  // ✅ REAL submit logic ⭐⭐⭐⭐⭐
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!name.trim()) return;
+
+    try {
+      setSaving(true);
+
+      // 1️⃣ Create list
+      const newList = await createList({
+        name,
+        description,
+        visibility: "public"
+      });
+
+      console.log("List created:", newList);
+
+      // 2️⃣ Add movies
+      for (const film of selectedFilms) {
+        await addMovieToList(newList.id, film);
+      }
+
+      // 3️⃣ Redirect ⭐⭐⭐
+      navigate(`/lists/${newList.id}`);
+
+    } catch (err) {
+      console.error("Create list failed:", err.message);
+    } finally {
+      setSaving(false);
+    }
   }
 
-  return <div className="create-new-list-page">
-    <button onClick={handleCreateList}>Create List</button>
-    <section>
-      <h1>New List</h1>
-      <hr />
-    </section>
-    <form onSubmit={(e) => e.preventDefault()}>
+  return (
+    <div className="create-new-list-page">
 
-      <div className="details-box">
-        <section className="create-new-list-details">
-          <label htmlFor="list-name">Name</label>
-          <input type="text" id="list-name" name="list-name" required />
-
-          <label htmlFor="list-tags">Tags</label>
-          <input type="text" id="list-tags" name="list-tags" required />
-
-          <label htmlFor="list-view-premission">Who can view</label>
-          <input type="text" id="list-view-premission" name="list-view-premission" required />
-
-        </section>
-
-
-        <section className="list-description">
-          <label htmlFor="list-description">Description</label>
-          <textarea id="list-description" name="list-description" rows="5" required></textarea>
-        </section>
-      </div>
-
-      <section className="create-new-list-actions">
-        <span className="add-film-pill">Add a Film</span>
-        <AddFilmBar onAddFilm={handleAddFilm} />
-        <Link className="cancel-btn" to="/">Cancel</Link>
-        <button className="create-list-btn" type="submit">
-          Create List
-        </button>
+      <section>
+        <h1>New List</h1>
+        <hr />
       </section>
 
-      <section className="selected-films">
-        {selectedFilms.length === 0 && (
-          <p>No films added yet</p>
-        )}
+      <form onSubmit={handleSubmit}>
 
-        {selectedFilms.length > 0 && (
-          <ul className="selected-films-list">
-            {selectedFilms.map((film) => {
-              const poster = film.poster_path
-                ? `https://image.tmdb.org/t/p/w200${film.poster_path}`
-                : "/placeholder.png"
+        <div className="details-box">
 
-              return (
-                <li key={film.id} className="selected-film-item">
-                  <div className="selected-film-box">
-                    <img
-                      src={poster}
-                      alt={film.title}
-                      className="selected-film-poster"
-                    />
+          <section className="create-new-list-details">
 
-                    <div className="selected-film-info">
-                      <strong>{film.title}</strong>
-                      <span style={{ color: "#686f81" }}>
-                        {film.release_date?.slice(0, 4)}
-                      </span>
+            <label>Name</label>
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+
+          </section>
+
+          <section className="list-description">
+
+            <label>Description</label>
+            <textarea
+              rows="5"
+              required
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+
+          </section>
+
+        </div>
+
+        <section className="create-new-list-actions">
+
+          <span className="add-film-pill">Add a Film</span>
+
+          <AddFilmBar onAddFilm={handleAddFilm} />
+
+          <Link className="cancel-btn" to="/">
+            Cancel
+          </Link>
+
+          <button
+            className="create-list-btn"
+            type="submit"
+            disabled={saving}
+          >
+            {saving ? "Creating..." : "Create List"}
+          </button>
+
+        </section>
+
+        <section className="selected-films">
+
+          {selectedFilms.length === 0 && (
+            <p>No films added yet</p>
+          )}
+
+          {selectedFilms.length > 0 && (
+            <ul className="selected-films-list">
+
+              {selectedFilms.map((film) => {
+
+                const poster = film.poster_path
+                  ? `https://image.tmdb.org/t/p/w200${film.poster_path}`
+                  : "/placeholder.png";
+
+                return (
+                  <li key={film.tmdb_id} className="selected-film-item">
+
+                    <div className="selected-film-box">
+
+                      <img
+                        src={poster}
+                        alt={film.title}
+                        className="selected-film-poster"
+                      />
+
+                      <div className="selected-film-info">
+                        <strong>{film.title}</strong>
+                        <span style={{ color: "#686f81" }}>
+                          {film.release_year}
+                        </span>
+                      </div>
+
                     </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="remove-film-btn"
-                    onClick={() => handleRemoveFilm(film.id)}
-                  >
-                    🗑️
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </section>
-    </form>
-  </div>;
+
+                    <button
+                      type="button"
+                      className="remove-film-btn"
+                      onClick={() => handleRemoveFilm(film.tmdb_id)}
+                    >
+                      🗑️
+                    </button>
+
+                  </li>
+                );
+              })}
+
+            </ul>
+          )}
+
+        </section>
+
+      </form>
+    </div>
+  );
 }
