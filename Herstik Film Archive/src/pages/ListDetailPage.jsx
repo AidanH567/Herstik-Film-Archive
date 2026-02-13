@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { getListById, getMoviesForList } from "../services/listService";
+import ListMovieCard from "../components/ListMovieCard";
 
 export default function ListDetailPage() {
   const { listId } = useParams();
@@ -52,6 +53,11 @@ export default function ListDetailPage() {
 
         <section className="list-detail-info">
           <h2>{list.name}</h2>
+          {list.description && (
+            <p className="list-description">
+              {list.description}
+            </p>
+          )}
         </section>
 
         <section className="list-detail-movies">
@@ -60,7 +66,7 @@ export default function ListDetailPage() {
           <div className="list-detail-movies-grid">
             {movies.map((movie, index) => (
               <div key={movie.id} className="list-detail-movie">
-                <MovieCard movie={movie} />
+                <ListMovieCard movie={movie} />
                 <span>{index + 1}</span>
               </div>
             ))}

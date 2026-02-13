@@ -414,6 +414,8 @@
 .recently-added-card {
   margin-top: 45px;
   display: flex;
+  justify-content: start;
+  gap: 30px;
 }
 .recently-added-text{
   display: flex;
@@ -806,4 +808,34 @@ hr {
 /* optional: active click state */
 .my-lists-sidebar a:active {
   color: #ffffff;
+}
+
+.delete-film-btn {
+  height: 100%;
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  width: 34px;
+  height: 34px;
+  margin-top: 110px;
+
+  background-color: #2d3342;   /* light grey / blue */
+  border: none;
+  border-radius: 8px;
+
+  color: #9aa4b2;              /* muted icon color */
+  font-size: 16px;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.1s ease;
+}
+.delete-film-btn:hover {
+  background-color: #3a4154;
+  color: #e05d5d; /* subtle red warning */
 }

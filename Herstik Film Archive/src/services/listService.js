@@ -115,3 +115,13 @@ export async function getListById(listId) {
   if (error) throw error;
   return data;
 }
+
+export async function deleteList(listId) {
+
+  const { error } = await supabase
+    .from("lists")
+    .delete()
+    .eq("id", listId);
+
+  if (error) throw error;
+}
