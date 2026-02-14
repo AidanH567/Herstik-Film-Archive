@@ -168,3 +168,21 @@ export async function updateMoviePositions(updates) {
 
   if (error) throw error;
 }
+
+export async function getPublicLists() {
+  const { data, error } = await supabase
+    .from("lists")
+    .select(`
+      *,
+      user:user_profiles (
+        id,
+        name
+      )
+    `)
+    .eq("visibility", "public")
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+
+  return data;
+}

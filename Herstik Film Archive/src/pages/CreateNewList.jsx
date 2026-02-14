@@ -11,6 +11,7 @@ export default function CreateNewList() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [saving, setSaving] = useState(false);
+  const [visibility, setVisibility] = useState("public");
 
   // ✅ Add film handler
   const handleAddFilm = (film) => {
@@ -47,7 +48,7 @@ export default function CreateNewList() {
       const newList = await createList({
         name,
         description,
-        visibility: "public"
+        visibility
       });
 
       console.log("List created:", newList);
@@ -65,6 +66,26 @@ export default function CreateNewList() {
     } finally {
       setSaving(false);
     }
+  }
+
+  function reorder(list, startIndex, endIndex) {
+    const updated = [...list];
+    const [moved] = updated.splice(startIndex, 1);
+    updated.splice(endIndex, 0, moved);
+    console.log("Reordered list:");
+    return updated;
+  }
+
+  function moveUp(index) {
+    if (index === 0) return;
+
+    setSelectedFilms(prev => reorder(prev, index, index - 1));
+  }
+
+  function moveDown(index) {
+    if (index === selectedFilms.length - 1) return;
+
+    setSelectedFilms(prev => reorder(prev, index, index + 1));
   }
 
   return (
@@ -88,6 +109,16 @@ export default function CreateNewList() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+
+            <label>Visibility</label>
+
+            <select
+              value={visibility}
+              onChange={(e) => setVisibility(e.target.value)}
+            >
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
 
           </section>
 
@@ -134,7 +165,7 @@ export default function CreateNewList() {
           {selectedFilms.length > 0 && (
             <ul className="selected-films-list">
 
-              {selectedFilms.map((film) => {
+              {selectedFilms.map((film, index) => {
 
                 const poster = film.poster_path
                   ? `https://image.tmdb.org/t/p/w200${film.poster_path}`
@@ -160,13 +191,32 @@ export default function CreateNewList() {
 
                     </div>
 
-                    <button
-                      type="button"
-                      className="remove-film-btn"
-                      onClick={() => handleRemoveFilm(film.tmdb_id)}
-                    >
-                      🗑️
-                    </button>
+                    {/* ⭐⭐⭐⭐⭐ CONTROLS ⭐⭐⭐⭐⭐ */}
+                    <div className="list-buttons">
+
+                      <button
+                        type="button"
+                        onClick={() => moveUp(index)}
+                      >
+                        ⬆
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => moveDown(index)}
+                      >
+                        ⬇
+                      </button>
+
+                      <button
+                        type="button"
+                        className="remove-film-btn"
+                        onClick={() => handleRemoveFilm(film.tmdb_id)}
+                      >
+                        🗑️
+                      </button>
+
+                    </div>
 
                   </li>
                 );
