@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddFilmBar from "../components/AddFilmBar";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { createList, addMovieToList, getMoviesForList, getListById, updateList } from "../services/listService";
+import { createList, addMovieToList, getMoviesForList, getListById, updateList, updateMoviePositions } from "../services/listService";
 
 export default function EditListPage() {
     const { listId } = useParams();
@@ -91,6 +91,49 @@ export default function EditListPage() {
         }
     }
 
+    function reorder(list, startIndex, endIndex) {
+        const updated = [...list];
+        const [moved] = updated.splice(startIndex, 1);
+        updated.splice(endIndex, 0, moved);
+        return updated;
+    }
+
+    async function savePositions(updatedFilms) {
+
+        const updates = updatedFilms.map((film, index) => ({
+            id: film.list_movie_id,
+
+            list_id: listId,           // ✅ needed for RLS
+            movie_id: film.id,         // ⭐⭐⭐⭐⭐🔥 CRITICAL FIX
+            position: index
+        }));
+
+        try {
+            await updateMoviePositions(updates);
+            console.log("Positions saved");
+        } catch (err) {
+            console.error("Position save failed:", err.message);
+        }
+    }
+
+    function moveUp(index) {
+        if (index === 0) return;
+
+        const updated = reorder(selectedFilms, index, index - 1);
+        setSelectedFilms(updated);
+
+        savePositions(updated);
+    }
+
+    function moveDown(index) {
+        if (index === selectedFilms.length - 1) return;
+
+        const updated = reorder(selectedFilms, index, index + 1);
+        setSelectedFilms(updated);
+
+        savePositions(updated);
+    }
+
     return (
         <div className="create-new-list-page">
 
@@ -158,7 +201,7 @@ export default function EditListPage() {
                     {selectedFilms.length > 0 && (
                         <ul className="selected-films-list">
 
-                            {selectedFilms.map((film) => {
+                            {selectedFilms.map((film, index) => {
 
                                 const poster = film.poster_path
                                     ? `https://image.tmdb.org/t/p/w200${film.poster_path}`
@@ -184,13 +227,32 @@ export default function EditListPage() {
 
                                         </div>
 
-                                        <button
-                                            type="button"
-                                            className="remove-film-btn"
-                                            onClick={() => handleRemoveFilm(film.tmdb_id)}
-                                        >
-                                            🗑️
-                                        </button>
+                                        {/* ⭐⭐⭐⭐⭐ BUTTON STACK ⭐⭐⭐⭐⭐ */}
+                                        <div className="list-buttons">
+
+                                            <button
+                                                type="button"
+                                                onClick={() => moveUp(index)}
+                                            >
+                                                ⬆
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => moveDown(index)}
+                                            >
+                                                ⬇
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                className="remove-film-btn"
+                                                onClick={() => handleRemoveFilm(film.tmdb_id)}
+                                            >
+                                                🗑️
+                                            </button>
+
+                                        </div>
 
                                     </li>
                                 );

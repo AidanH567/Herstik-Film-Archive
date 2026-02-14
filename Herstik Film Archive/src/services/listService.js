@@ -43,7 +43,7 @@ export async function getMyLists() {
 
 export async function addMovieToList(listId, movie) {
 
-  // 1️⃣ Upsert movie
+  // ✅ 1️⃣ Upsert movie (unchanged)
   const { data: movieRow, error: movieError } = await supabase
     .from("movies")
     .upsert(
@@ -60,15 +60,26 @@ export async function addMovieToList(listId, movie) {
 
   if (movieError) throw movieError;
 
-  // 2️⃣ Link movie → list
+  // ✅ 2️⃣ Get next position ⭐⭐⭐⭐⭐🔥
+  const { count, error: countError } = await supabase
+    .from("list_movies")
+    .select("*", { count: "exact", head: true })
+    .eq("list_id", listId);
+
+  if (countError) throw countError;
+
+  const nextPosition = count ?? 0;
+
+  // ✅ 3️⃣ Insert WITH POSITION ⭐⭐⭐⭐⭐🔥
   const { error: linkError } = await supabase
     .from("list_movies")
     .insert({
       list_id: listId,
-      movie_id: movieRow.id
+      movie_id: movieRow.id,
+      position: nextPosition
     });
 
-  // ⭐ Ignore duplicate error (VERY IMPORTANT)
+  // ✅ Ignore duplicate error (unchanged)
   if (linkError && linkError.code !== "23505") {
     throw linkError;
   }
@@ -77,10 +88,14 @@ export async function addMovieToList(listId, movie) {
 }
 
 
+
 export async function getMoviesForList(listId) {
+
   const { data, error } = await supabase
     .from("list_movies")
     .select(`
+      id,
+      position,
       movie:movies (
         id,
         tmdb_id,
@@ -89,12 +104,19 @@ export async function getMoviesForList(listId) {
         release_year
       )
     `)
-    .eq("list_id", listId);
+    .eq("list_id", listId)
+    .order("position", { ascending: true });  // ⭐⭐⭐⭐⭐ IMPORTANT
 
   if (error) throw error;
 
-  return data.map((row) => row.movie);
+  return data.map((row) => ({
+    ...row.movie,
+
+    position: row.position,        // ⭐⭐⭐⭐⭐ NEW
+    list_movie_id: row.id          // ⭐⭐⭐⭐⭐ CRITICAL FOR UPDATES
+  }));
 }
+
 
 export async function removeMovieFromList(listId, movieId) {
   const { error } = await supabase
@@ -132,6 +154,17 @@ export async function updateList(listId, updates) {
     .from("lists")
     .update(updates)
     .eq("id", listId);
+
+  if (error) throw error;
+}
+
+export async function updateMoviePositions(updates) {
+
+  const { error } = await supabase
+    .from("list_movies")
+    .upsert(updates, {
+      onConflict: "id"   // ⭐⭐⭐⭐⭐🔥 THE FIX
+    });
 
   if (error) throw error;
 }
