@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import FeaturedListCard from '../components/featuredListCard';
+import FeaturedListCard from '../components/FeaturedListCard';
 import PopularFeaturedListCard from '../components/PopularFeaturedListCard';
 import RecentlyAddedCard from '../components/RecentlyAddedCard';
 import { getPublicLists } from '../services/listService';
@@ -52,7 +52,7 @@ export default function Lists() {
       <hr />
       <div className="popular-lists-grid">
         {popularLists.map(list => (
-          <PopularFeaturedListCard key={list.id} list={list.id} />
+          <PopularFeaturedListCard key={list.id} list={list} />
         ))}
       </div>
     </section>

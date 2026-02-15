@@ -50,19 +50,19 @@ export default function PopularFeaturedListCard({ list }) {
                 </div>
 
                 <h4>{list.name}</h4>
-
-                <div className="featured-list-profile">
-                    <img
-                        src="/profile-photo.jpg"
-                        alt="Profile"
-                        className="profile-photo"
-                    />
-                    <span>
-                        Created by <strong>{list.user?.name || "Unknown User"}</strong>
-                    </span>
-                </div>
-
             </Link>
+            <div className="featured-list-profile">
+                <img
+                    src="/profile-photo.jpg"
+                    alt="Profile"
+                    className="profile-photo"
+                />
+                <span>
+                    Created by <strong>{list.user?.name || "Unknown User"}</strong>
+                </span>
+            </div>
+
+
 
         </div>
     );

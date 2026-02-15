@@ -875,3 +875,46 @@ hr {
   justify-content: flex-end;  
   align-items: flex-end;        
 }
+
+.recently-added-text > a {
+  
+  text-decoration: none;
+  color: #9ab;
+  transition: color 0.2s ease;
+}
+
+.recently-added-text > a:visited {
+  color: #9ab;
+}
+
+.recently-added-text > a:hover {
+  color: #e7e9ed;
+}
+.popular-list-card > a {
+  
+  text-decoration: none;
+  color: #9ab;
+  transition: color 0.2s ease;
+}
+
+.popular-list-card > a:visited {
+  color: #9ab;
+}
+
+.popular-list-card > a:hover {
+  color: #e7e9ed;
+}
+.featured-list-card > a {
+  
+  text-decoration: none;
+  color: #9ab;
+  transition: color 0.2s ease;
+}
+
+.featured-list-card > a:visited {
+  color: #9ab;
+}
+
+.featured-list-card > a:hover {
+  color: #e7e9ed;
+}
