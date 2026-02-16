@@ -9,7 +9,7 @@ export default function Films() {
   const { movies, loading, error } = useTrendingMovies()
   return (
     <div className="film-page">
-      {/* <FilmNav /> */}
+      {/* <FilmNav /jj> */}
       {/* This can show your default films landing page */}
       {/* e.g. popular films grid */}
 
