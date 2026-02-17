@@ -13,6 +13,13 @@ export default function ListCard({ list, onDelete }) {
     const userName =
         session?.user?.user_metadata?.name || "Loading...";
 
+    const creatorName =
+        list?.user?.name                         // ✅ Public / Joined lists
+        || (session?.user?.id === list?.user_id  // ✅ My lists (owner)
+            ? session.user.user_metadata?.name
+            : null)
+        || "Unknown User";
+
     useEffect(() => {
 
         if (!list?.id) return;   // ⭐⭐⭐⭐⭐ CRITICAL FIX
@@ -80,27 +87,27 @@ export default function ListCard({ list, onDelete }) {
 
                     <div className="featured-list-profile">
                         <img src="../public/profile-photo.jpg" alt="Profile" className="profile-photo" />
-                        <span>Created by <strong>{userName}</strong></span>
+                        <span>Created by <strong>{creatorName}</strong></span>
                     </div>
                     {list.description && (
                         <p>{list.description}</p>
                     )}
                 </div>
-                    <div className="list-buttons">
-                <Link
-                    to={`/lists/${list.id}/edit`}
-                    className="edit-film-btn"
-                >
-                    ✏
-                </Link>
+                <div className="list-buttons">
+                    <Link
+                        to={`/lists/${list.id}/edit`}
+                        className="edit-film-btn"
+                    >
+                        ✏
+                    </Link>
 
-                <button
-                    className="edit-film-btn"
-                    onClick={handleDeleteList}
-                >
-                    🗑
-                </button>
-                 </div>
+                    <button
+                        className="edit-film-btn"
+                        onClick={handleDeleteList}
+                    >
+                        🗑
+                    </button>
+                </div>
 
             </div>
 
