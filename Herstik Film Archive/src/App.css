@@ -918,3 +918,6 @@ hr {
 .featured-list-card > a:hover {
   color: #e7e9ed;
 }
+.btn {
+  width: 100px;
+}

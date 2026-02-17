@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getMoviesForList } from "../services/listService";
+import { useListLikes } from "../hook/useListLikes";
 
 export default function PopularFeaturedListCard({ list }) {
 
     if (!list) return null;   // ⭐⭐⭐⭐⭐ SAFETY
 
     const [movies, setMovies] = useState([]);
+
+    const {
+        liked,
+        likeCount,
+        toggleLike
+    } = useListLikes(list.id);
 
     useEffect(() => {
 
@@ -27,6 +34,10 @@ export default function PopularFeaturedListCard({ list }) {
 
     return (
         <div className="popular-list-card">
+
+            <button className="btn" onClick={toggleLike}>
+                {liked ? "♥" : "♡"} {likeCount}
+            </button>
 
             <Link to={`/lists/${list.id}`}>
 
@@ -60,6 +71,7 @@ export default function PopularFeaturedListCard({ list }) {
                 <span>
                     Created by <strong>{list.user?.name || "Unknown User"}</strong>
                 </span>
+
             </div>
 
 

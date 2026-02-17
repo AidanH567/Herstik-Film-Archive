@@ -9,7 +9,7 @@ export default function Lists() {
 
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     async function loadLists() {
       try {
