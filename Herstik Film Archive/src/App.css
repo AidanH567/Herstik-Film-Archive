@@ -921,3 +921,44 @@ hr {
 .btn {
   width: 100px;
 }
+.popular-list-like-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 6px 12px;
+
+  background-color: #1b2233;
+  color: #9aa4b2;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.12s ease,
+    box-shadow 0.2s ease;
+}
+
+.popular-list-like-btn:hover {
+  background-color: #242a3b;
+  color: #ffffff;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.popular-list-like-btn:active {
+  transform: scale(0.95);
+}
+
+.popular-list-like-btn.liked {
+  color: #ff6b6b;
+  border-color: rgba(255, 107, 107, 0.35);
+}

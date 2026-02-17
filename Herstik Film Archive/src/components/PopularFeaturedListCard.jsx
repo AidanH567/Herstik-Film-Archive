@@ -35,10 +35,6 @@ export default function PopularFeaturedListCard({ list }) {
     return (
         <div className="popular-list-card">
 
-            <button className="btn" onClick={toggleLike}>
-                {liked ? "♥" : "♡"} {likeCount}
-            </button>
-
             <Link to={`/lists/${list.id}`}>
 
                 <div className="popular-list-collage">
@@ -71,6 +67,9 @@ export default function PopularFeaturedListCard({ list }) {
                 <span>
                     Created by <strong>{list.user?.name || "Unknown User"}</strong>
                 </span>
+                <button className="popular-list-like-btn" onClick={toggleLike}>
+                    {liked ? "♥" : "♡"} {likeCount}
+                </button>
 
             </div>
 

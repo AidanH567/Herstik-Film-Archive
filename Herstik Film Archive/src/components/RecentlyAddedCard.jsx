@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import useTrendingMovies from "../hooks/useTrendingMovies";
 import { Link } from "react-router-dom";
 import { getMoviesForList } from "../services/listService";
+import { useListLikes } from "../hook/useListLikes";
 
 export default function RecentlyAddedCard({ list }) {
 
     const [movies, setMovies] = useState([])
+
+    const {
+        liked,
+        likeCount,
+        toggleLike
+    } = useListLikes(list.id);
 
     useEffect(() => {
         if (!list?.id) return;
@@ -64,10 +71,16 @@ export default function RecentlyAddedCard({ list }) {
                         <span>
                             Created by <strong>{list.user?.name || "Unknown User"}</strong>
                         </span>
+
+                        <button className="popular-list-like-btn" onClick={toggleLike}>
+                            {liked ? "♥" : "♡"} {likeCount}
+                        </button>
                     </div>
                     <p>A quiet, character-driven story that follows a protagonist at a
                         turning point in their life.</p>
                 </div>
+
+
 
             </div>
             <hr />
