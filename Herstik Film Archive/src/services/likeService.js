@@ -62,3 +62,32 @@ export async function hasUserLiked(listId, userId) {
 
   return !!data;
 }
+
+export async function getLikedLists() {
+
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    throw new Error("Not authenticated");
+  }
+
+  const { data, error } = await supabase
+    .from("list_likes")
+    .select(`
+      list:lists (
+        *,
+        user:user_profiles (
+          id,
+          name
+        )
+      )
+    `)
+    .eq("user_id", user.id);
+
+  if (error) throw error;
+
+  return data.map(row => row.list);
+}
