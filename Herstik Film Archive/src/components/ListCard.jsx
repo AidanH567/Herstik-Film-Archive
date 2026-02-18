@@ -14,15 +14,15 @@ export default function ListCard({ list, onDelete }) {
         session?.user?.user_metadata?.name || "Loading...";
 
     const creatorName =
-        list?.user?.name                         // ✅ Public / Joined lists
-        || (session?.user?.id === list?.user_id  // ✅ My lists (owner)
+        list?.user?.name                         
+        || (session?.user?.id === list?.user_id 
             ? session.user.user_metadata?.name
             : null)
         || "Unknown User";
 
     useEffect(() => {
 
-        if (!list?.id) return;   // ⭐⭐⭐⭐⭐ CRITICAL FIX
+        if (!list?.id) return;  
 
         async function loadMovies() {
             try {
@@ -48,7 +48,7 @@ export default function ListCard({ list, onDelete }) {
 
             console.log("List deleted");
 
-            // ⭐⭐⭐⭐⭐ Notify parent
+            
             onDelete(list.id);
 
         } catch (err) {

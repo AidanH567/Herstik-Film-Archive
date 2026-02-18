@@ -9,7 +9,7 @@ export default function MyLists() {
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Correct delete handler 
+   
   function handleDeleteList(listId) {
     setLists(prev =>
       prev.filter(list => list.id !== listId)
