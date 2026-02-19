@@ -15,18 +15,18 @@ export default function FilmDetail() {
 
     console.log(movie)
 
-    // useEffect(() => {
-    //     async function loadReviews() {
-    //         try {
-    //             const data = await getReviewsForMovie(movie.id);
-    //             setReviews(data);
-    //         } catch (err) {
-    //             console.error("Failed to load reviews:", err.message);
-    //         }
-    //     }
+    useEffect(() => {
+        async function loadReviews() {
+            try {
+                const data = await getReviewsForMovie(movie.id);
+                setReviews(data);
+            } catch (err) {
+                console.error("Failed to load reviews:", err.message);
+            }
+        }
 
-    //     loadReviews();
-    // }, [movie.id]);
+        loadReviews();
+    }, []);
 
 
     const directors = credits?.crew.filter(
