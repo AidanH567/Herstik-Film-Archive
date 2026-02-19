@@ -1,6 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import { getMovieDetails, getMovieCredits } from "../services/tmdb";
 import { useEffect, useState } from "react";
+import ReviewForm from "../components/ReviewForm";
+import ReviewsList from "../components/ReviewsList";
 
 export default function FilmDetail() {
     const { id } = useParams();
@@ -8,6 +10,24 @@ export default function FilmDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [credits, setCredits] = useState(null)
+    const [showReviewForm, setShowReviewForm] = useState(false);
+    const [reviews, setReviews] = useState([]);
+
+    console.log(movie)
+
+    // useEffect(() => {
+    //     async function loadReviews() {
+    //         try {
+    //             const data = await getReviewsForMovie(movie.id);
+    //             setReviews(data);
+    //         } catch (err) {
+    //             console.error("Failed to load reviews:", err.message);
+    //         }
+    //     }
+
+    //     loadReviews();
+    // }, [movie.id]);
+
 
     const directors = credits?.crew.filter(
         person => person.job === "Director"
@@ -61,6 +81,27 @@ export default function FilmDetail() {
                     <p>{movie.tagline}</p>
                     <p>{movie.overview}</p>
                 </div>
+            </section>
+
+            <section className="reviews-section">
+
+                <h3>Reviews</h3>
+
+                <button onClick={() => setShowReviewForm(true)}>
+                    Write Review
+                </button>
+
+                {showReviewForm && (
+                    <ReviewForm
+                        movieId={movie.id}
+                        onReviewCreated={(review) =>
+                            setReviews(prev => [review, ...prev])
+                        }
+                    />
+                )}
+
+                <ReviewsList reviews={reviews} />
+
             </section>
         </div>
     );

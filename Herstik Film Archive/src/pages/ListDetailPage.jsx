@@ -5,6 +5,7 @@ import { getListById, getMoviesForList } from "../services/listService";
 import ListMovieCard from "../components/ListMovieCard";
 import { addComment, deleteComment, getCommentsForList } from "../services/commentService";
 import { useAuth } from "../context/AuthContext";
+import { getReviewsForMovie } from "../services/reviewService";
 
 export default function ListDetailPage() {
   const { listId } = useParams();
@@ -14,6 +15,8 @@ export default function ListDetailPage() {
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+
+
 
   const { session } = useAuth()
 
@@ -33,6 +36,8 @@ export default function ListDetailPage() {
     loadComments();
 
   }, [listId]);
+
+ 
 
   async function handleAddComment() {
 
