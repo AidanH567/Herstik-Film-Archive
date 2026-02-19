@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { getListById, getMoviesForList } from "../services/listService";
 import ListMovieCard from "../components/ListMovieCard";
-import { addComment, getCommentsForList } from "../services/commentService";
+import { addComment, deleteComment, getCommentsForList } from "../services/commentService";
 import { useAuth } from "../context/AuthContext";
 
 export default function ListDetailPage() {
@@ -57,6 +57,26 @@ export default function ListDetailPage() {
       console.error("Comment failed:", err.message);
     }
   }
+
+  async function handleDeleteComment(commentId) {
+
+    const confirmed = confirm("Delete comment?");
+    if (!confirmed) return;
+
+    try {
+
+      await deleteComment(commentId);
+
+      // ✅ Instantly update UI (important)
+      setComments(prev =>
+        prev.filter(comment => comment.id !== commentId)
+      );
+
+    } catch (err) {
+      console.error("Delete failed:", err.message);
+    }
+  }
+
 
   useEffect(() => {
     async function loadList() {
@@ -140,22 +160,37 @@ export default function ListDetailPage() {
 
           <div className="comments-list">
 
-            {comments.map(comment => (
-              <div key={comment.id} className="comment">
+            {comments.map(comment => {
 
-                <strong>{comment.user?.name}</strong>
+              const isOwner = session?.user?.id === comment.user_id;
 
-                <p>{comment.comment}</p>
+              return (
+                <div key={comment.id} className="comment">
 
-              </div>
-            ))}
+                  <strong>{comment.user?.name}</strong>
+
+                  <p>{comment.comment}</p>
+
+                  {isOwner && (
+                    <button
+                      className="delete-comment-btn"
+                      onClick={() => handleDeleteComment(comment.id)}
+                    >
+                      🗑
+                    </button>
+                  )}
+
+                </div>
+              )
+            })}
 
           </div>
 
         </section>
-        
+
 
       </div>
     </div>
-  );
-}
+  )
+};
+
