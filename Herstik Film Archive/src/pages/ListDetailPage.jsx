@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { getListById, getMoviesForList } from "../services/listService";
 import ListMovieCard from "../components/ListMovieCard";
+import { addComment, getCommentsForList } from "../services/commentService";
+import { useAuth } from "../context/AuthContext";
 
 export default function ListDetailPage() {
   const { listId } = useParams();
@@ -10,6 +12,51 @@ export default function ListDetailPage() {
   const [list, setList] = useState(null);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+
+  const { session } = useAuth()
+
+  useEffect(() => {
+
+    if (!listId) return;
+
+    async function loadComments() {
+      try {
+        const data = await getCommentsForList(listId);
+        setComments(data);
+      } catch (err) {
+        console.error("Failed to load comments:", err.message);
+      }
+    }
+
+    loadComments();
+
+  }, [listId]);
+
+  async function handleAddComment() {
+
+    if (!session?.user) return;
+    if (!newComment.trim()) return;
+
+    try {
+
+      await addComment(
+        listId,
+        session.user.id,
+        newComment
+      );
+
+      setNewComment("");
+
+      // Reload comments ⭐⭐⭐⭐⭐
+      const updated = await getCommentsForList(listId);
+      setComments(updated);
+
+    } catch (err) {
+      console.error("Comment failed:", err.message);
+    }
+  }
 
   useEffect(() => {
     async function loadList() {
@@ -72,6 +119,41 @@ export default function ListDetailPage() {
             ))}
           </div>
         </section>
+
+        <section className="comments-section">
+
+          <h3>Comments</h3>
+
+          <div className="add-comment">
+
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Write a comment..."
+            />
+
+            <button onClick={handleAddComment}>
+              Post Comment
+            </button>
+
+          </div>
+
+          <div className="comments-list">
+
+            {comments.map(comment => (
+              <div key={comment.id} className="comment">
+
+                <strong>{comment.user?.name}</strong>
+
+                <p>{comment.comment}</p>
+
+              </div>
+            ))}
+
+          </div>
+
+        </section>
+        
 
       </div>
     </div>

@@ -962,3 +962,34 @@ hr {
   color: #ff6b6b;
   border-color: rgba(255, 107, 107, 0.35);
 }
+
+.comments-section {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.add-comment textarea {
+  width: 100%;
+  background: #2d3342;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  color: #c7cbd6;
+  resize: vertical;
+}
+
+.add-comment button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: #2dd36f;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.comment {
+  background: #1b2233;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
