@@ -31,3 +31,12 @@ export async function getCommentsForList(listId) {
 
   return data;
 }
+
+export async function deleteComment(commentId) {
+  const { error } = await supabase
+    .from("list_comments")
+    .delete()
+    .eq("id", commentId);
+
+  if (error) throw error;
+}
