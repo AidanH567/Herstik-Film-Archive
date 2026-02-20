@@ -3,6 +3,7 @@ import { getMovieDetails, getMovieCredits } from "../services/tmdb";
 import { useEffect, useState } from "react";
 import ReviewForm from "../components/ReviewForm";
 import ReviewsList from "../components/ReviewsList";
+import { getReviewsForMovie } from "../services/reviewService";
 
 export default function FilmDetail() {
     const { id } = useParams();
@@ -13,9 +14,10 @@ export default function FilmDetail() {
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [reviews, setReviews] = useState([]);
 
-    console.log(movie)
+    console.log("movie content and stuff", movie);
 
     useEffect(() => {
+        if (!movie?.id) return;
         async function loadReviews() {
             try {
                 const data = await getReviewsForMovie(movie.id);
@@ -92,12 +94,15 @@ export default function FilmDetail() {
                 </button>
 
                 {showReviewForm && (
+                    <>
                     <ReviewForm
                         movieId={movie.id}
                         onReviewCreated={(review) =>
                             setReviews(prev => [review, ...prev])
                         }
                     />
+                    
+                    </>
                 )}
 
                 <ReviewsList reviews={reviews} />
