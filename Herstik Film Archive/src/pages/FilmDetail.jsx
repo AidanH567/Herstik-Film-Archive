@@ -6,103 +6,153 @@ import ReviewsList from "../components/ReviewsList";
 import { getReviewsForMovie } from "../services/reviewService";
 
 export default function FilmDetail() {
+
     const { id } = useParams();
+
     const [movie, setMovie] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [credits, setCredits] = useState(null)
-    const [showReviewForm, setShowReviewForm] = useState(false);
+    const [credits, setCredits] = useState(null);
     const [reviews, setReviews] = useState([]);
 
-    console.log("movie content and stuff", movie);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const [showReviewForm, setShowReviewForm] = useState(false);
+
+    const POSTER_BASE = "https://image.tmdb.org/t/p/w500";
+    const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280";
+
+    /* =========================
+       LOAD MOVIE + CREDITS
+    ========================= */
 
     useEffect(() => {
-        if (!movie?.id) return;
-        async function loadReviews() {
+
+        async function loadMovie() {
             try {
-                const data = await getReviewsForMovie(movie.id);
-                setReviews(data);
-            } catch (err) {
-                console.error("Failed to load reviews:", err.message);
-            }
-        }
 
-        loadReviews();
-    }, []);
-
-
-    const directors = credits?.crew.filter(
-        person => person.job === "Director"
-    )
-
-    const POSTER_BASE = "https://image.tmdb.org/t/p/w500"
-    const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280"
-
-    useEffect(() => {
-        async function load() {
-            try {
-                setLoading(true)
+                setLoading(true);
 
                 const [movieData, creditsData] = await Promise.all([
                     getMovieDetails(id),
                     getMovieCredits(id),
-                ])
+                ]);
 
-                console.log("Credits:", creditsData)
-                console.log("Movie Data:", movieData)
+                setMovie(movieData);
+                setCredits(creditsData);
 
-                setMovie(movieData)
-                setCredits(creditsData)
             } catch (err) {
-                setError(err.message)
+
+                setError(err.message);
+
             } finally {
-                setLoading(false)
+
+                setLoading(false);
+
             }
         }
 
-        load()
-    }, [id])
+        loadMovie();
 
-    if (loading) return <p>Loading…</p>
-    if (error) return <p>Error: {error}</p>
-    if (!movie) return <p>Not found</p>
+    }, [id]);
 
-    const posterUrl = movie.poster_path ? POSTER_BASE + movie.poster_path : null
-    const backdropUrl = movie.backdrop_path ? BACKDROP_BASE + movie.backdrop_path : null
+    /* =========================
+       LOAD REVIEWS (FIXED ⭐⭐⭐⭐⭐)
+    ========================= */
 
-    const year = movie.release_date ? movie.release_date.slice(0, 4) : ""
-    const genres = movie.genres?.map(g => g.name).join(" • ") || ""
+    useEffect(() => {
+
+        if (!movie?.id) return;   // ⭐⭐⭐⭐⭐ CRITICAL GUARD
+
+        async function loadReviews() {
+            try {
+
+                const data = await getReviewsForMovie(movie.id);
+                setReviews(data);
+
+            } catch (err) {
+
+                console.error("Failed to load reviews:", err.message);
+
+            }
+        }
+
+        loadReviews();
+
+    }, [movie?.id]);   // ⭐⭐⭐⭐⭐ DEPENDENCY FIX
+
+    /* =========================
+       SAFE DIRECTORS LOGIC ⭐⭐⭐⭐⭐
+    ========================= */
+
+    const directors =
+        credits?.crew?.filter(person => person.job === "Director") || [];
+
+    if (loading) return <p>Loading…</p>;
+    if (error) return <p>Error: {error}</p>;
+    if (!movie) return <p>Not found</p>;
+
+    const posterUrl =
+        movie.poster_path ? POSTER_BASE + movie.poster_path : null;
+
+    const backdropUrl =
+        movie.backdrop_path ? BACKDROP_BASE + movie.backdrop_path : null;
+
+    const year =
+        movie.release_date ? movie.release_date.slice(0, 4) : "";
+
     return (
         <div className="film-detail">
-            <img src={backdropUrl} alt="" className="backdrop" />
+
+            {backdropUrl && (
+                <img src={backdropUrl} alt="" className="backdrop" />
+            )}
+
             <section className="detail-section">
-                <img src={posterUrl} alt="" />
+
+                {posterUrl && <img src={posterUrl} alt="" />}
+
                 <div className="text-section">
+
                     <h1 className="detail-title">{movie.title}</h1>
-                    <p>{year} Directed By {directors.map(d => d.name).join(", ")} </p>
-                    <p>{movie.tagline}</p>
+
+                    <p>
+                        {year} • Directed by{" "}
+                        {directors.map(d => d.name).join(", ")}
+                    </p>
+
+                    {movie.tagline && <p>{movie.tagline}</p>}
+
                     <p>{movie.overview}</p>
+
                 </div>
             </section>
+
+            {/* =========================
+               REVIEWS SECTION
+            ========================= */}
 
             <section className="reviews-section">
 
                 <h3>Reviews</h3>
 
-                <button onClick={() => setShowReviewForm(true)}>
-                    Write Review
+                <button
+                    onClick={() =>
+                        setShowReviewForm(prev => !prev)
+                    }
+                >
+                    {showReviewForm ? "Cancel Review" : "Write Review"}
                 </button>
 
                 {showReviewForm && (
-                    <>
                     <ReviewForm
                         movieId={movie.id}
-                        onReviewCreated={(review) =>
-                            setReviews(prev => [review, ...prev])
-                        }
+                        onReviewCreated={(review) => {
+
+                            setReviews(prev => [review, ...prev]);
+                            setShowReviewForm(false);  // ⭐ NICE UX
+
+                        }}
                     />
-                    
-                    </>
                 )}
 
                 <ReviewsList reviews={reviews} />
