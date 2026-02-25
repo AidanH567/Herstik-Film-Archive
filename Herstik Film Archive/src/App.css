@@ -1006,3 +1006,100 @@ hr {
   opacity: 1;
   color: #e05d5d;
 }
+
+/* =========================
+   FILM NAVBAR
+========================= */
+
+.film-nav {
+  width: 100%;
+  padding: 18px 24px;
+  margin-bottom: 30px;
+
+  background-color: #111a2e;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.film-search input {
+  width: 100%;
+  padding: 10px 14px;
+
+  background-color: #2d3342;
+  border: none;
+  border-radius: 8px;
+
+  color: #c7cbd6;
+  font-size: 0.95rem;
+
+  transition: background-color 0.2s ease;
+}
+
+.film-search input:focus {
+  background-color: #ffffff;
+  color: #111;
+  outline: none;
+}
+
+/* =========================
+   FILTER ROW
+========================= */
+
+.film-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* =========================
+   INDIVIDUAL FILTER
+========================= */
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 120px;
+}
+
+.filter span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.6;
+}
+
+/* =========================
+   SELECT DROPDOWNS
+========================= */
+
+.filter select {
+  padding: 8px 10px;
+
+  background-color: #2d3342;
+  border: none;
+  border-radius: 8px;
+
+  color: #c7cbd6;
+  font-size: 0.9rem;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.filter select:hover {
+  background-color: #3a4154;
+}
+
+.filter select:focus {
+  background-color: #ffffff;
+  color: #111;
+  outline: none;
+}
