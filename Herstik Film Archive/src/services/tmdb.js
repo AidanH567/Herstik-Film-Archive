@@ -119,6 +119,38 @@ export async function searchMovies(query, pageGroup = 0) {
   return fetchPageGroup(baseUrl, pageGroup)
 }
 
+export async function discoverMovies(filters, pageGroup = 0) {
+  const params = new URLSearchParams()
+
+  // Search takes priority
+  if (filters.q) {
+    return searchMovies(filters.q, pageGroup)
+  }
+
+  // Trending takes priority
+  if (filters.trending) {
+    return getTrendingMovies(filters.trending, pageGroup)
+  }
+
+  if (filters.genre) {
+    params.append("with_genres", filters.genre)
+  }
+
+  if (filters.year) {
+    params.append("primary_release_year", filters.year)
+  }
+
+  if (filters.rating) {
+    params.append("vote_average.gte", filters.rating)
+  }
+
+  // Prevent low vote junk results
+  params.append("vote_count.gte", "100")
+
+  const baseUrl = `${BASE_URL}/discover/movie?${params.toString()}`
+  return fetchPageGroup(baseUrl, pageGroup)
+}
+
 /* =====================================================
    Single-movie endpoints
 ===================================================== */

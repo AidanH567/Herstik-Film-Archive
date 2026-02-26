@@ -1,11 +1,7 @@
 import * as React from "react"
 import { useSearchParams } from "react-router-dom"
 import {
-  getPopularMovies,
-  getMoviesByGenre,
-  getMoviesByYear,
-  searchMovies,
-  getTrendingMovies
+  discoverMovies
 } from "../services/tmdb"
 import MovieCard from "../components/MovieCard"
 
@@ -14,6 +10,7 @@ export default function FilmsBrowse() {
 
   const genre = searchParams.get("genre")
   const year = searchParams.get("year")
+  const rating = searchParams.get("rating")
   const q = searchParams.get("q")
   const trending = searchParams.get("trending")
 
@@ -27,7 +24,7 @@ export default function FilmsBrowse() {
   // Reset pagination when filters change
   React.useEffect(() => {
     setPageGroup(0)
-  }, [genre, year, q, trending])
+  }, [genre, year, rating, q, trending])
 
   React.useEffect(() => {
     setLoading(true)
@@ -35,25 +32,10 @@ export default function FilmsBrowse() {
 
     const fetchMovies = async () => {
       try {
-        let result
-
-        if (genre && year) {
-          result = await getMoviesByGenreAndYear(
-            genre,
-            year,
-            pageGroup
-          )
-        } else if (genre) {
-          result = await getMoviesByGenre(genre, pageGroup)
-        } else if (q) {
-          result = await searchMovies(q, pageGroup)
-        } else if (year) {
-          result = await getMoviesByYear(year, pageGroup)
-        } else if (trending) {
-          result = await getTrendingMovies(trending, pageGroup)
-        } else {
-          result = await getPopularMovies(pageGroup)
-        }
+        const result = await discoverMovies(
+          { genre, year, rating, q, trending },
+          pageGroup
+        )
 
         setMovies(result.movies)
         setHasMore(result.hasMore)
@@ -65,7 +47,7 @@ export default function FilmsBrowse() {
     }
 
     fetchMovies()
-  }, [genre, year, q, trending, pageGroup])
+  }, [genre, year, rating, q, trending, pageGroup])
 
   return (
     <div className="films-browse">

@@ -1,18 +1,27 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { getMovieGenres } from "../services/tmdb"
 import { useEffect, useState } from "react"
 
 export default function FilmNav() {
   const navigate = useNavigate()
   const [genres, setGenres] = useState([])
+  const [searchParams] = useSearchParams()
+  console.log(searchParams.toString())
 
   useEffect(() => {
     getMovieGenres().then(setGenres).catch(console.error)
   }, [])
 
   function goToBrowse(key, value) {
-    if (!value) return
-    navigate(`/films/browse?${key}=${encodeURIComponent(value)}`)
+    const params = new URLSearchParams(searchParams)
+
+    if (!value) {
+      params.delete(key)
+    } else {
+      params.set(key, value)
+    }
+
+    navigate(`/films/browse?${params.toString()}`)
   }
 
   function goToSearch(q) {
