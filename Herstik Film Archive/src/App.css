@@ -234,17 +234,49 @@
 .film-detail{
   width: 100%;
   min-height: 100vh;
-  padding: 2rem 0;
+  /* padding: 2rem 0; */
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
 
-.backdrop{
-  width: 80%;
-  height: 80%;
-  padding: 0;
+.film-detail-backdrop {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.backdrop {
+  width: 100%;
+  height: auto;
+  display: block;
+
+  /* Combine horizontal + vertical fade */
+  -webkit-mask-image:
+    linear-gradient(to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100%
+    ),
+    linear-gradient(to bottom,
+      black 70%,
+      transparent 100%
+    );
+
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right,
+      transparent 0%,
+      black 15%,
+      black 85%,
+      transparent 100%
+    ),
+    linear-gradient(to bottom,
+      black 70%,
+      transparent 100%
+    );
 }
 
 .detail-section{
@@ -255,6 +287,8 @@
 .detail-section img{
   width: 230px;
   height: 345px;
+  border-radius: 5%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 
@@ -1102,4 +1136,7 @@ hr {
   background-color: #ffffff;
   color: #111;
   outline: none;
+}
+.app-main{
+  padding: 0;
 }

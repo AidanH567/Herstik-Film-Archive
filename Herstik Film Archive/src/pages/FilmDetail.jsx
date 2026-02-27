@@ -102,10 +102,12 @@ export default function FilmDetail() {
 
     return (
         <div className="film-detail">
-
+            
+            <div className="film-detail-backdrop">
             {backdropUrl && (
                 <img src={backdropUrl} alt="" className="backdrop" />
             )}
+            </div>
 
             <section className="detail-section">
 
