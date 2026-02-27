@@ -50,8 +50,8 @@ export default function AppRoutes() {
         <Route path="films" element={<FilmsLayout />}>
           <Route index element={<Films />} />
           <Route path="browse" element={<FilmsBrowse />} />
-          <Route path=":id" element={<FilmDetail />} />
         </Route>
+        <Route path="films/:id" element={<FilmDetail />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

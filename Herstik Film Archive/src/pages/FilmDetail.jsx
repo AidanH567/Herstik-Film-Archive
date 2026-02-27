@@ -116,8 +116,9 @@ export default function FilmDetail() {
                     <h1 className="detail-title">{movie.title}</h1>
 
                     <p>
-                        {year} • Directed by{" "}
-                        {directors.map(d => d.name).join(", ")}
+                        {year} • Directed by{" "} 
+                        {directors.map(d => d.name).join(", ")} • Rating: {" "}
+                        {Math.floor(movie.vote_average) / 2 } ⭐
                     </p>
 
                     {movie.tagline && <p>{movie.tagline}</p>}

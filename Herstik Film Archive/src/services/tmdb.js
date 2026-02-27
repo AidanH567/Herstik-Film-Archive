@@ -141,7 +141,9 @@ export async function discoverMovies(filters, pageGroup = 0) {
   }
 
   if (filters.rating) {
-    params.append("vote_average.gte", filters.rating)
+    const starValue = parseFloat(filters.rating)
+    const tmdbRating = starValue * 2
+    params.append("vote_average.gte", tmdbRating)
   }
 
   // Prevent low vote junk results

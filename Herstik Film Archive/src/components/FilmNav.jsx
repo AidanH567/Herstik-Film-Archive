@@ -78,9 +78,15 @@ export default function FilmNav() {
           <span>Rating</span>
           <select defaultValue="" onChange={(e) => goToBrowse("rating", e.target.value)}>
             <option value="">Choose…</option>
-            <option value="9">9+</option>
-            <option value="8">8+</option>
-            <option value="7">7+</option>
+            <option value="5">5 ⭐ & up</option>
+            <option value="4.5">4.5 ⭐ & up</option>
+            <option value="4">4 ⭐ & up</option>
+            <option value="3.5">3.5 ⭐ & up</option>
+            <option value="3">3 ⭐ & up</option>
+            <option value="2.5">2.5 ⭐ & up</option>
+            <option value="2">2 ⭐ & up</option>
+            <option value="1.5">1.5 ⭐ & up</option>
+            <option value="1">1 ⭐ & up</option>
           </select>
         </label>
 
