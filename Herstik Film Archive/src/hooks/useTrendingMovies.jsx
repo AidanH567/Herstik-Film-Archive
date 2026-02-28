@@ -7,7 +7,13 @@ function mapMovie(movie) {
   return {
     id: movie.id,
     title: movie.title,
-    poster: movie.poster_path ? IMAGE_BASE + movie.poster_path : null,
+    poster: movie.poster_path
+      ? IMAGE_BASE + movie.poster_path
+      : null,
+
+    backdrop_path: movie.backdrop_path, 
+    vote_average: movie.vote_average,   
+    overview: movie.overview,           
   }
 }
 

@@ -10,6 +10,9 @@ import { removeMovieFromList } from "../services/listService.js"
 
 export default function Home() {
   const { movies, loading, error } = useTrendingMovies()
+  const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280";
+  const heroMovie = movies[0]
+  console.log("Hero movie:", heroMovie)
 
 
   //TEST CODE - REMOVE LATER
@@ -99,25 +102,34 @@ export default function Home() {
 
   return (
     <div className="home">
+
+      
+
       <section className="home-hero">
-        <div className="hero-text">
-          <div className="hero-bg" style={{ backgroundImage: `url(${Poster})` }} />
-          <h1>Herstik Film Archive</h1>
-          <p>Log films, build lists, and track your ratings over time.</p>
-          <div className="hero-actions">
-            <Link className="btn" to="/films">
-              Browse films
-            </Link>
-            <Link className="btn btn-secondary" to="/signup">
-              Create account
-            </Link>
-          </div>
+
+        <div className="film-detail-backdrop">
+            {heroMovie?.backdrop_path && (
+              <img
+                className="backdrop"
+                src={BACKDROP_BASE + heroMovie.backdrop_path}
+                alt={heroMovie.title}
+              />
+            )}
+        </div>
+
+        <div className="home-hero-content">
+          <h1>Welcome to the Herstik Film Archive</h1>
+          <p>Discover, review, and celebrate your favorite films.</p>
+          <Link to="/films" className="btn">
+            Browse Films
+          </Link>
         </div>
       </section>
 
-      <section className="home-popular">
-        <h2>Popular this week</h2>
+      
 
+      <section className="home-popular">
+        <h2 style={{ marginTop: 0 }}> Popular this week</h2>
         {loading && <p>Loading…</p>}
         {error && <p>Error: {error}</p>}
 
