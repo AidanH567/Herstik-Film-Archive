@@ -1,12 +1,69 @@
 import { useNavigate, useSearchParams } from "react-router-dom"
-import { getMovieGenres } from "../services/tmdb"
+import { getMovieGenres, getMovieCredits } from "../services/tmdb"
 import { useEffect, useState } from "react"
+import { searchMovies } from "../services/tmdb"
 
 export default function FilmNav() {
+
   const navigate = useNavigate()
   const [genres, setGenres] = useState([])
   const [searchParams] = useSearchParams()
-  console.log(searchParams.toString())
+
+  const [query, setQuery] = useState("")
+  const [results, setResults] = useState([])
+  const [searchLoading, setSearchLoading] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
+
+
+  useEffect(() => {
+    if (query.trim().length < 2) {
+      setResults([])
+      return
+    }
+
+    const timeout = setTimeout(async () => {
+      try {
+        setSearchLoading(true)
+
+        const data = await searchMovies(query, 0)
+        const basicMovies = data.movies.slice(0, 5)
+
+        const moviesWithDirectors = await Promise.all(
+          basicMovies.map(async (movie) => {
+            try {
+              const credits = await getMovieCredits(movie.id)
+              console.log("Credits for:", movie.title, credits)
+
+              const director = credits.crew?.find(
+                (person) => person.job === "Director"
+              )
+
+              return {
+                ...movie,
+                director: director?.name || "—",
+              }
+            } catch {
+              return {
+                ...movie,
+                director: "—",
+              }
+            }
+          })
+        )
+
+        setResults(moviesWithDirectors)
+
+      } catch (err) {
+        console.error("Search error:", err)
+      } finally {
+        setSearchLoading(false)
+      }
+    }, 300)
+
+    return () => clearTimeout(timeout)
+
+  }, [query])
+
 
   useEffect(() => {
     getMovieGenres().then(setGenres).catch(console.error)
@@ -33,24 +90,19 @@ export default function FilmNav() {
 
   return (
     <section className="film-nav">
-      <div className="film-search">
-        <input
-          type="search"
-          placeholder="Search films..."
-          onKeyDown={(e) => {
-            if (e.key === "Enter") goToSearch(e.currentTarget.value)
-          }}
-        />
-      </div>
+
+      <div className="film-filers-text">Browse</div>
 
       <div className="film-filters">
+
+
         <label className="filter">
           <span>Year</span>
           <select
             defaultValue=""
             onChange={(e) => goToBrowse("year", e.target.value)}
           >
-            <option value="">Choose…</option>
+            <option value="">Select</option>
             {Array.from({ length: 2026 - 1995 + 1 }, (_, i) => {
               const year = 2026 - i // count down from 2026
               return (
@@ -65,7 +117,7 @@ export default function FilmNav() {
         <label className="filter">
           <span>Genre</span>
           <select defaultValue="" onChange={(e) => goToBrowse("genre", e.target.value)}>
-            <option value="">Choose…</option>
+            <option value="">Select</option>
             {genres.map((genre) => (
               <option key={genre.id} value={genre.id}>
                 {genre.name}
@@ -77,7 +129,7 @@ export default function FilmNav() {
         <label className="filter">
           <span>Rating</span>
           <select defaultValue="" onChange={(e) => goToBrowse("rating", e.target.value)}>
-            <option value="">Choose…</option>
+            <option value="">Select</option>
             <option value="5">5 ⭐ & up</option>
             <option value="4.5">4.5 ⭐ & up</option>
             <option value="4">4 ⭐ & up</option>
@@ -96,7 +148,7 @@ export default function FilmNav() {
             defaultValue=""
             onChange={(e) => goToBrowse("trending", e.target.value)}
           >
-            <option value="">Choose…</option>
+            <option value="">Select</option>
             <option value="day">Today</option>
             <option value="week">This Week</option>
             <option value="year">This Year</option>
@@ -104,14 +156,43 @@ export default function FilmNav() {
           </select>
         </label>
 
-        {/* <label className="filter">
-          <span>Other</span>
-          <select defaultValue="" onChange={(e) => goToBrowse("other", e.target.value)}>
-            <option value="">Choose…</option>
-            <option value="with_poster">Has Poster</option>
-            <option value="short">Under 90 mins</option>
-          </select>
-        </label> */}
+        <div className="film-search" style={{ position: "relative" }}>
+          <input
+            type="search"
+            placeholder="Search films..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+
+          {searchLoading && <p>Searching…</p>}
+
+          {isFocused && results.length > 0 && (
+            <ul className="film-search-dropdown">
+              {results.map((movie) => (
+                <li
+                  key={movie.id}
+                  className="film-search-item"
+                  onClick={() => {
+                    navigate(`/films/${movie.id}`)
+                    setQuery("")
+                    setResults([])
+                  }}
+                >
+                  <div className="dropdown-meta">
+                    <strong>{movie.title}:</strong>
+                    <span>({movie.release_date?.slice(0, 4)})</span>
+                    <span className="dropdown-director">
+                      {movie.director}
+                    </span>
+                  </div>
+
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </section>
   )

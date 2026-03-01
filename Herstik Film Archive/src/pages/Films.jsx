@@ -3,15 +3,16 @@ import MovieCard from "../components/MovieCard"
 import ReviewCard from "../components/RecentReviews"
 import useTrendingMovies from "../hooks/useTrendingMovies"
 import {reviews} from "../data/reviews.js"
+import useUpcomingMovies from "../hooks/useUpcomingMovies.jsx"
+import useTopRatedMovies from "../hooks/useTopRatedMovies.jsx"
 
 
 export default function Films() {
   const { movies, loading, error } = useTrendingMovies()
+  const { movies: upcomingMovies, loading: upcomingLoading, error: upcomingError } = useUpcomingMovies()
+  const { movies: topRatedMovies, loading: topRatedLoading, error: topRatedError } = useTopRatedMovies()
   return (
     <div className="film-page">
-      {/* <FilmNav /jj> */}
-      {/* This can show your default films landing page */}
-      {/* e.g. popular films grid */}
 
       <section className="home-popular">
         <h2>Popular this week</h2>
@@ -29,14 +30,14 @@ export default function Films() {
       </section>
 
       <section className="home-popular">
-        <h2>Popular this week</h2>
+        <h2>Top Rated Movies</h2>
 
-        {loading && <p>Loading…</p>}
-        {error && <p>Error: {error}</p>}
+        {topRatedLoading && <p>Loading…</p>}
+        {topRatedError && <p>Error: {topRatedError}</p>}
 
-        {!loading && !error && (
+        {!topRatedLoading && !topRatedError && (
           <div className="poster-row">
-            {movies.slice(0, 6).map((movie) => (
+            {topRatedMovies.slice(0, 6).map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
