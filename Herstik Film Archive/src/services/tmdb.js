@@ -175,3 +175,14 @@ export async function getMovieGenres() {
   const data = await res.json()
   return data.genres
 }
+
+export async function getUpcomingMovies(pageGroup = 0) {
+  const baseUrl = `${BASE_URL}/movie/upcoming`
+  return fetchPageGroup(baseUrl, pageGroup)
+}
+
+export async function getTopRatedMovies(pageGroup = 0) {
+  const baseUrl = `${BASE_URL}/movie/top_rated`
+  return fetchPageGroup(baseUrl, pageGroup)
+}
+

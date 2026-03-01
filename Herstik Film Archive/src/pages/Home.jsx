@@ -5,11 +5,26 @@ import ReviewCard from "../components/RecentReviews.jsx"
 import "../App.css"
 import useTrendingMovies from "../hooks/useTrendingMovies"
 import { removeMovieFromList } from "../services/listService.js"
+import useUpcomingMovies from "../hooks/useUpcomingMovies.jsx"
+import useTopRatedMovies from "../hooks/useTopRatedMovies.jsx"
 
 
 
 export default function Home() {
   const { movies, loading, error } = useTrendingMovies()
+
+  const {
+    movies: upcomingMovies,
+    loading: upcomingLoading,
+    error: upcomingError
+  } = useUpcomingMovies()
+
+  const {
+    movies: topRatedMovies,
+    loading: topRatedLoading,
+    error: topRatedError
+  } = useTopRatedMovies()
+
   const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280";
   const heroMovie = movies[0]
   console.log("Hero movie:", heroMovie)
@@ -103,18 +118,18 @@ export default function Home() {
   return (
     <div className="home">
 
-      
+
 
       <section className="home-hero">
 
         <div className="film-detail-backdrop">
-            {heroMovie?.backdrop_path && (
-              <img
-                className="backdrop"
-                src={BACKDROP_BASE + heroMovie.backdrop_path}
-                alt={heroMovie.title}
-              />
-            )}
+          {heroMovie?.backdrop_path && (
+            <img
+              className="backdrop"
+              src={BACKDROP_BASE + heroMovie.backdrop_path}
+              alt={heroMovie.title}
+            />
+          )}
         </div>
 
         <div className="home-hero-content">
@@ -126,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      
+
 
       <section className="home-popular">
         <h2 style={{ marginTop: 0 }}> Popular this week</h2>
@@ -143,14 +158,29 @@ export default function Home() {
       </section>
 
       <section className="home-popular">
-        <h2>New Films</h2>
+        <h2>Upcoming Films</h2>
 
         {loading && <p>Loading…</p>}
         {error && <p>Error: {error}</p>}
 
         {!loading && !error && (
           <div className="poster-row">
-            {movies.slice(0, 6).map((movie) => (
+            {upcomingMovies.slice(0, 6).map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="home-popular">
+        <h2>Top Rated Films</h2>
+
+        {loading && <p>Loading…</p>}
+        {error && <p>Error: {error}</p>}
+
+        {!loading && !error && (
+          <div className="poster-row">
+            {topRatedMovies.slice(0, 6).map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
