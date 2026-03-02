@@ -143,9 +143,38 @@
 
 .home-popular {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.carousel-button {
+  border-radius: 50%;
+  border: none;
+  background-color: #1b2a4a;
+  color: white;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+
+  transition: 
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.15s ease;
+}
+
+.carousel-button:hover {
+  background-color: #24365f; /* slightly lighter navy */
+
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.4),
+    0 0 16px rgba(255, 255, 255, 0.2);
+
+  transform: translateY(-2px);
+}
+
+.carousel-button:active {
+  transform: translateY(0);
 }
 
 
@@ -174,6 +203,7 @@
   width: 100%;
   justify-content: center;
   transition: opacity 0.15s ease;
+  margin-right: 5px;
 }
 .fade-out {
   opacity: 0;

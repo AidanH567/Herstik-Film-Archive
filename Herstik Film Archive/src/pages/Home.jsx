@@ -37,26 +37,6 @@ export default function Home() {
   const heroMovie = movies[0]
   console.log("Hero movie:", heroMovie)
 
-  const handleNext = () => {
-    if (!movies.length) return
-
-    setIsTransitioning(true)
-
-    setTimeout(() => {
-      const nextIndex = popularIndex + 6
-
-      // If next slice would go past the end → reset to 0
-      if (nextIndex >= movies.length) {
-        setPopularIndex(0)
-      } else {
-        setPopularIndex(nextIndex)
-      }
-
-      setIsTransitioning(false)
-    }, 150)
-  }
-
-
   //TEST CODE - REMOVE LATER
   const reviews = [
     {
@@ -152,9 +132,9 @@ export default function Home() {
       </section>
 
 
-
+      <h2 style={{ marginTop: 0 }}> Popular this week</h2>
       <section className="home-popular">
-        <h2 style={{ marginTop: 0 }}> Popular this week</h2>
+
         {loading && <p>Loading…</p>}
         {error && <p>Error: {error}</p>}
 
@@ -165,11 +145,12 @@ export default function Home() {
             ))}
           </div>
         )}
-        <button onClick={popularCarousel.next}>Next</button>
+        <button className="carousel-button" onClick={popularCarousel.next}>{">"}</button>
       </section>
 
+      <h2>Upcoming Films</h2>
       <section className="home-popular">
-        <h2>Upcoming Films</h2>
+
 
         {loading && <p>Loading…</p>}
         {error && <p>Error: {error}</p>}
@@ -181,11 +162,12 @@ export default function Home() {
             ))}
           </div>
         )}
-        <button onClick={upcomingCarousel.next}>Next</button>
+        <button className="carousel-button" onClick={upcomingCarousel.next}>{">"}</button>
       </section>
 
+      <h2>Top Rated Films</h2>
       <section className="home-popular">
-        <h2>Top Rated Films</h2>
+
 
         {loading && <p>Loading…</p>}
         {error && <p>Error: {error}</p>}
@@ -197,7 +179,7 @@ export default function Home() {
             ))}
           </div>
         )}
-        <button onClick={topRatedCarousel.next}>Next</button>
+        <button className="carousel-button"  onClick={topRatedCarousel.next}>{">"}</button>
       </section>
 
       <section className="reviews">
