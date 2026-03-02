@@ -375,13 +375,14 @@
 .featured-list-card>h4 {
   font-size: 1.2rem;
   font-weight: 600;
-  width: 100%;
 }
 
 .featured-lists-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  justify-content: space-evenly;
+  
 }
 
 .featured-list-profile {
@@ -396,6 +397,10 @@
   border-radius: 20px;
 }
 
+.featured-lists-section {
+  display: flex;
+  flex-direction: column;
+}
 
 /* =========================
    LIST COLLAGE (LETTERBOXD-STYLE)
@@ -405,7 +410,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2px;
-  width: 300px;
+  width: auto;
   aspect-ratio: 7 / 3;
   overflow: hidden;
   border-radius: 6px;
@@ -1294,7 +1299,6 @@ hr {
 }
 
 .sign-form input:focus {
-  
   background-color: white;
   color: #111;
 }
