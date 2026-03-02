@@ -7,12 +7,13 @@ import useTrendingMovies from "../hooks/useTrendingMovies"
 import { removeMovieFromList } from "../services/listService.js"
 import useUpcomingMovies from "../hooks/useUpcomingMovies.jsx"
 import useTopRatedMovies from "../hooks/useTopRatedMovies.jsx"
+import { useState } from "react"
+import useCarousel from "../hooks/useCarousel.jsx"
 
 
 
 export default function Home() {
   const { movies, loading, error } = useTrendingMovies()
-
   const {
     movies: upcomingMovies,
     loading: upcomingLoading,
@@ -24,10 +25,36 @@ export default function Home() {
     loading: topRatedLoading,
     error: topRatedError
   } = useTopRatedMovies()
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const popularCarousel = useCarousel(movies)
+  const upcomingCarousel = useCarousel(upcomingMovies)
+  const topRatedCarousel = useCarousel(topRatedMovies)
+
+
+
 
   const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280";
   const heroMovie = movies[0]
   console.log("Hero movie:", heroMovie)
+
+  const handleNext = () => {
+    if (!movies.length) return
+
+    setIsTransitioning(true)
+
+    setTimeout(() => {
+      const nextIndex = popularIndex + 6
+
+      // If next slice would go past the end → reset to 0
+      if (nextIndex >= movies.length) {
+        setPopularIndex(0)
+      } else {
+        setPopularIndex(nextIndex)
+      }
+
+      setIsTransitioning(false)
+    }, 150)
+  }
 
 
   //TEST CODE - REMOVE LATER
@@ -132,12 +159,13 @@ export default function Home() {
         {error && <p>Error: {error}</p>}
 
         {!loading && !error && (
-          <div className="poster-row">
-            {movies.slice(0, 6).map((movie) => (
+          <div className={`poster-row ${popularCarousel.isTransitioning ? "fade-out" : "fade-in"}`}>
+            {popularCarousel.currentItems.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}
+        <button onClick={popularCarousel.next}>Next</button>
       </section>
 
       <section className="home-popular">
@@ -147,12 +175,13 @@ export default function Home() {
         {error && <p>Error: {error}</p>}
 
         {!loading && !error && (
-          <div className="poster-row">
-            {upcomingMovies.slice(0, 6).map((movie) => (
+          <div className={`poster-row ${upcomingCarousel.isTransitioning ? "fade-out" : "fade-in"}`}>
+            {upcomingCarousel.currentItems.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}
+        <button onClick={upcomingCarousel.next}>Next</button>
       </section>
 
       <section className="home-popular">
@@ -162,12 +191,13 @@ export default function Home() {
         {error && <p>Error: {error}</p>}
 
         {!loading && !error && (
-          <div className="poster-row">
-            {topRatedMovies.slice(0, 6).map((movie) => (
+          <div className={`poster-row ${topRatedCarousel.isTransitioning ? "fade-out" : "fade-in"}`}>
+            {topRatedCarousel.currentItems.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}
+        <button onClick={topRatedCarousel.next}>Next</button>
       </section>
 
       <section className="reviews">

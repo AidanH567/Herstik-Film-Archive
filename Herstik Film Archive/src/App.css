@@ -173,8 +173,15 @@
   gap: 16px;
   width: 100%;
   justify-content: center;
+  transition: opacity 0.15s ease;
+}
+.fade-out {
+  opacity: 0;
 }
 
+.fade-in {
+  opacity: 1;
+}
 
 /* =========================
    REVIEWS

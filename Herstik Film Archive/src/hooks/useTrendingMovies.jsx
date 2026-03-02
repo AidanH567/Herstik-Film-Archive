@@ -17,7 +17,7 @@ function mapMovie(movie) {
   }
 }
 
-export default function useTrendingMovies() {
+export default function useTrendingMovies(pageGroup = 0) {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -31,7 +31,7 @@ export default function useTrendingMovies() {
         setError(null)
 
         // 🔹 NEW: destructure movies from result object
-        const { movies: rawMovies } = await getTrendingMovies("week", 0)
+        const { movies: rawMovies } = await getTrendingMovies("week", pageGroup)
         const mapped = rawMovies.map(mapMovie)
 
         if (!cancelled) setMovies(mapped)
@@ -48,7 +48,7 @@ export default function useTrendingMovies() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [pageGroup])
 
   return { movies, loading, error }
 }
