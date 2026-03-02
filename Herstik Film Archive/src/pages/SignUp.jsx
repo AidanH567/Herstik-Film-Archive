@@ -33,20 +33,19 @@ const Signup = () => {
   );
 
   return (
-    <>
-      <h1 className="landing-header">Paper Like A Boss</h1>
+    <div className="signup-page">
+      <h1 className="landing-header">Sign up</h1>
       <div className="sign-form-container">
         <form
           action={submitAction}
           aria-label="Sign up form"
           aria-describedby="form-description"
+          className='sign-form'
         >
           <div id="form-description" className="sr-only">
             Use this form to create a new account. Enter your email and
             password.
           </div>
-
-          <h2 className="form-title">Sign up today!</h2>
           <p>
             Already have an account?{' '}
             <Link className="form-link" to="/">
@@ -96,29 +95,6 @@ const Signup = () => {
             disabled={isPending}
           />
 
-          {/* <fieldset
-            className="form-fieldset"
-            aria-required="true"
-            aria-label="Select your role"
-          >
-            <legend>Select your role</legend>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  name="account-type"
-                  value="admin"
-                  required
-                />{' '}
-                Admin
-              </label>
-              <label>
-                <input type="radio" name="account-type" value="rep" required />{' '}
-                Sales Rep
-              </label>
-            </div>
-          </fieldset> */}
-
           <button
             type="submit"
             className="form-button"
@@ -135,7 +111,7 @@ const Signup = () => {
           )}
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

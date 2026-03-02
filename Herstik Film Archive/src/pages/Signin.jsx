@@ -1,6 +1,6 @@
 import { useActionState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import {useNavigate, Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Signin = () => {
   const { signInUser } = useAuth();
@@ -29,24 +29,24 @@ const Signin = () => {
   );
 
   return (
-    <>
-      <h1 className="landing-header">Paper Like A Boss</h1>
+    <div className='signup-page'>
+      <h1 className="landing-header">Sign in</h1>
       <div className="sign-form-container">
         <form
           action={submitAction}
           aria-label="Sign in form"
           aria-describedby="form-description"
+          className='sign-form'
         >
           <div id="form-description" className="sr-only">
             Use this form to sign in to your account. Enter your email and
             password.
           </div>
 
-          <h2 className="form-title">Sign in</h2>
           <p>
             Don't have an account yet?{' '}
             <Link className="form-link" to="/signup">
-            Sign up
+              Sign up
             </Link>
           </p>
 
@@ -62,6 +62,7 @@ const Signin = () => {
             aria-invalid={error ? 'true' : 'false'}
             aria-describedby={error ? 'signin-error' : undefined}
             disabled={isPending}
+            
           />
 
           <label htmlFor="password">Password</label>
@@ -76,6 +77,7 @@ const Signin = () => {
             aria-invalid={error ? 'true' : 'false'}
             aria-describedby={error ? 'signin-error' : undefined}
             disabled={isPending}
+            
           />
 
           <button
@@ -98,8 +100,8 @@ const Signin = () => {
           )}
         </form>
       </div>
-    </>
-  );
+      </div>
+      );
 };
 
-export default Signin;
+      export default Signin;
