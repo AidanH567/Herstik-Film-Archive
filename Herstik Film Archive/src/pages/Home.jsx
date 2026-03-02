@@ -186,9 +186,9 @@ export default function Home() {
         <h2>Recent reviews</h2>
 
         <div className="reviews-grid">
-          {reviews.map((review) => (
+          {/* {reviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
-          ))}
+          ))} */}
         </div>
       </section>
     </div>

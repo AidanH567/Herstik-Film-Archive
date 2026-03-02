@@ -6,12 +6,14 @@ import ReviewsList from "../components/ReviewsList";
 import { getReviewsForMovie } from "../services/reviewService";
 import { getOrCreateMovie } from "../services/reviewService";
 import { supabase } from "../supabase-client";
+import ReviewCard from "../components/RecentReviews";
 
 export default function FilmDetail() {
 
     const { id } = useParams();
 
     const [movie, setMovie] = useState(null);
+    console.log("Movie in FilmDetail:", movie)
     // console.log("Movie in FilmDetail:", movie)
     const [credits, setCredits] = useState(null);
     const [reviews, setReviews] = useState([]);
@@ -179,7 +181,14 @@ export default function FilmDetail() {
                     />
                 )}
 
-                <ReviewsList reviews={reviews} />
+               
+                {reviews.map((review) => (
+                    <ReviewCard
+                        key={review.id}
+                        review={review}
+                        movie={movie}
+                    />
+                ))}
 
             </section>
         </div>

@@ -1,51 +1,44 @@
-import "../App.css"
+export default function ReviewCard({ review, movie }) {
 
-export default function ReviewCard({ review }) {
-  const {
-    user,
-    movie,
-    rating,
-    ratingCount,
-    reviewText,
-    likes,
-  } = review
+  const POSTER_BASE = "https://image.tmdb.org/t/p/w500"
 
+  const posterUrl = movie.poster_path
+    ? POSTER_BASE + movie.poster_path
+    : null
+console.log(review.user?.name)
   return (
     <article className="review-card">
-      {/* Poster */}
-      <img
-        className="review-poster"
-        src={movie.poster}
-        alt={`${movie.title} (${movie.year})`}
-      />
 
-      {/* Content */}
+      {posterUrl && (
+        <img
+          className="review-poster"
+          src={posterUrl}
+          alt={movie.title}
+        />
+      )}
+
       <div className="review-content">
-        {/* Header */}
+
         <div className="review-header">
-          <span className="review-user">{user.displayName}</span>
+          <span className="review-user">
+            {review.user?.name}
+          </span>
+
           <span className="review-film">
-            {movie.title} {movie.year}
+            {movie.title} ({movie.release_date?.slice(0,4)})
           </span>
         </div>
 
-        {/* Rating */}
         <div className="review-rating">
-          <span className="stars">★★★★½</span>
-          <span className="rating-count">{ratingCount}</span>
+          <span className="stars">
+            {"★".repeat(review.rating || 0)}
+          </span>
         </div>
 
-        {/* Review text */}
         <p className="review-text">
-          {reviewText}
+          {review.text}
         </p>
 
-        {/* Footer */}
-        <div className="review-footer">
-          <span className="review-likes">
-            Like review · {likes.toLocaleString()} likes
-          </span>
-        </div>
       </div>
     </article>
   )
