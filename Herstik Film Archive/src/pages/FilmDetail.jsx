@@ -4,17 +4,22 @@ import { useEffect, useState } from "react";
 import ReviewForm from "../components/ReviewForm";
 import ReviewsList from "../components/ReviewsList";
 import { getReviewsForMovie } from "../services/reviewService";
+import { getOrCreateMovie } from "../services/reviewService";
+import { supabase } from "../supabase-client";
 
 export default function FilmDetail() {
 
     const { id } = useParams();
 
     const [movie, setMovie] = useState(null);
+    // console.log("Movie in FilmDetail:", movie)
     const [credits, setCredits] = useState(null);
     const [reviews, setReviews] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [dbMovieId, setDbMovieId] = useState(null)
 
     const [showReviewForm, setShowReviewForm] = useState(false);
 
@@ -60,25 +65,37 @@ export default function FilmDetail() {
     ========================= */
 
     useEffect(() => {
-
-        if (!movie?.id) return;   // ⭐⭐⭐⭐⭐ CRITICAL GUARD
+        if (!movie?.id) return;
 
         async function loadReviews() {
             try {
 
-                const data = await getReviewsForMovie(movie.id);
-                setReviews(data);
+                // 🔎 Check if movie exists locally (DO NOT create it)
+                const { data: existing } = await supabase
+                    .from("movies")
+                    .select("id")
+                    .eq("tmdb_id", movie.id)
+                    .single()
+
+                if (!existing) {
+                    setReviews([])
+                    setDbMovieId(null)
+                    return
+                }
+
+                setDbMovieId(existing.id)
+
+                const data = await getReviewsForMovie(existing.id)
+                setReviews(data)
 
             } catch (err) {
-
-                console.error("Failed to load reviews:", err.message);
-
+                console.error("Failed to load reviews:", err.message)
             }
         }
 
-        loadReviews();
+        loadReviews()
 
-    }, [movie?.id]);   // ⭐⭐⭐⭐⭐ DEPENDENCY FIX
+    }, [movie?.id])  // ⭐⭐⭐⭐⭐ DEPENDENCY FIX
 
     /* =========================
        SAFE DIRECTORS LOGIC ⭐⭐⭐⭐⭐
@@ -102,11 +119,11 @@ export default function FilmDetail() {
 
     return (
         <div className="film-detail">
-            
+
             <div className="film-detail-backdrop">
-            {backdropUrl && (
-                <img src={backdropUrl} alt="" className="backdrop" />
-            )}
+                {backdropUrl && (
+                    <img src={backdropUrl} alt="" className="backdrop" />
+                )}
             </div>
 
             <section className="detail-section">
@@ -118,9 +135,9 @@ export default function FilmDetail() {
                     <h1 className="detail-title">{movie.title}</h1>
 
                     <p>
-                        {year} • Directed by{" "} 
+                        {year} • Directed by{" "}
                         {directors.map(d => d.name).join(", ")} • Rating: {" "}
-                        {Math.floor(movie.vote_average) / 2 } ⭐
+                        {Math.floor(movie.vote_average) / 2} ⭐
                     </p>
 
                     {movie.tagline && <p>{movie.tagline}</p>}
@@ -139,21 +156,25 @@ export default function FilmDetail() {
                 <h3>Reviews</h3>
 
                 <button
-                    onClick={() =>
+                    onClick={async () => {
+
+                        if (!dbMovieId) {
+                            const dbMovie = await getOrCreateMovie(movie)
+                            setDbMovieId(dbMovie.id)
+                        }
+
                         setShowReviewForm(prev => !prev)
-                    }
+                    }}
                 >
                     {showReviewForm ? "Cancel Review" : "Write Review"}
                 </button>
 
                 {showReviewForm && (
                     <ReviewForm
-                        movieId={movie.id}
+                        movieId={dbMovieId}
                         onReviewCreated={(review) => {
-
-                            setReviews(prev => [review, ...prev]);
-                            setShowReviewForm(false);  // ⭐ NICE UX
-
+                            setReviews(prev => [review, ...prev])
+                            setShowReviewForm(false)
                         }}
                     />
                 )}

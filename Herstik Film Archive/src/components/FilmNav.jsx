@@ -163,7 +163,6 @@ export default function FilmNav() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
           />
 
           {searchLoading && <p>Searching…</p>}

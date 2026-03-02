@@ -60,3 +60,32 @@ export async function deleteReview(reviewId) {
 
   if (error) throw error;
 }
+
+export async function getOrCreateMovie(tmdbMovie) {
+  // 1️⃣ Check if movie already exists
+  const { data: existing, error: fetchError } = await supabase
+    .from("movies")
+    .select("*")
+    .eq("tmdb_id", tmdbMovie.id)
+    .single()
+
+  if (existing) return existing
+
+  // If not found, insert
+  const { data, error } = await supabase
+    .from("movies")
+    .insert({
+      tmdb_id: tmdbMovie.id,
+      title: tmdbMovie.title,
+      poster_path: tmdbMovie.poster_path,
+      release_year: tmdbMovie.release_date
+        ? parseInt(tmdbMovie.release_date.slice(0, 4))
+        : null
+    })
+    .select()
+    .single()
+
+  if (error) throw error
+
+  return data
+}
