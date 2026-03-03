@@ -89,3 +89,19 @@ export async function getOrCreateMovie(tmdbMovie) {
 
   return data
 }
+
+export async function getRecentReviews(limit = 10) {
+  const { data, error } = await supabase
+    .from("reviews")
+    .select(`
+      *,
+      user:user_profiles ( id, name ),
+      movie:movies ( id, title, poster_path, release_year, tmdb_id )
+    `)
+    .order("created_at", { ascending: false })
+    .limit(limit)
+
+  if (error) throw error
+
+  return data
+}

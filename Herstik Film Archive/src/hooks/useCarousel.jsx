@@ -15,11 +15,28 @@ export default function useCarousel(items, step = 6) {
     }, 150)
   }
 
+  const back = () => {
+    if (!items.length) return
+
+    setIsTransitioning(true)
+
+    setTimeout(() => {
+      setIndex(prev => {
+        const newIndex = prev - step
+        return newIndex < 0
+          ? items.length - step
+          : newIndex
+      })
+      setIsTransitioning(false)
+    }, 150)
+  }
+
   const currentItems = items.slice(index, index + step)
 
   return {
     currentItems,
     next,
+    back,
     isTransitioning
   }
 }

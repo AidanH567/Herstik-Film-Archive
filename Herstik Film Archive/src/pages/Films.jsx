@@ -6,7 +6,8 @@ import { reviews } from "../data/reviews.js"
 import useUpcomingMovies from "../hooks/useUpcomingMovies.jsx"
 import useTopRatedMovies from "../hooks/useTopRatedMovies.jsx"
 import useCarousel from "../hooks/useCarousel.jsx"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getRecentReviews } from "../services/reviewService.js"
 
 
 export default function Films() {
@@ -18,6 +19,24 @@ export default function Films() {
   const popularCarousel = useCarousel(movies)
   const upcomingCarousel = useCarousel(upcomingMovies)
   const topRatedCarousel = useCarousel(topRatedMovies)
+
+  const [reviews, setReviews] = useState([])
+  const [loadingReviews, setLoadingReviews] = useState(true)
+
+  useEffect(() => {
+    async function loadReviews() {
+      try {
+        const data = await getRecentReviews(8)
+        setReviews(data)
+      } catch (err) {
+        console.error("Failed to load recent reviews:", err.message)
+      } finally {
+        setLoadingReviews(false)
+      }
+    }
+
+    loadReviews()
+  }, [])
 
 
   return (

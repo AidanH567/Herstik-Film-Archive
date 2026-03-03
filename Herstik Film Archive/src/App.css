@@ -204,6 +204,7 @@
   justify-content: center;
   transition: opacity 0.15s ease;
   margin-right: 5px;
+  margin-left: 5px;
 }
 .fade-out {
   opacity: 0;
