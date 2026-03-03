@@ -242,21 +242,24 @@
 .review-content {
   display: flex;
   flex-direction: column;
+  
 }
 
 .review-header {
   display: flex;
   flex-direction: column;
-  margin-bottom: 6px;
+  gap: 5px;
 }
 
 .review-user {
   font-weight: 600;
+  font-size: 0.8rem;
 }
 
 .review-film {
   font-size: 0.9rem;
   opacity: 0.75;
+  font-weight: 800;
 }
 
 .review-rating {
@@ -1370,4 +1373,20 @@ hr {
   text-decoration: none;
   font-weight: 600;
   font-size: 13px;
+}
+
+.review-delete-button {
+  background-color: #e74c3c; /* red */
+  color: #fff;                /* white text */
+  border: none;
+  border-radius: 20px;        /* rounded */
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.review-delete-button:hover {
+  background-color: #c0392b; /* darker red on hover */
 }

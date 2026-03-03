@@ -45,6 +45,7 @@ export default function FeaturedListCard({ list }) {
 
             return (
               <img
+              className="list-collage-poster"
                 key={movie.id}
                 src={posterUrl}
                 alt={movie.title}

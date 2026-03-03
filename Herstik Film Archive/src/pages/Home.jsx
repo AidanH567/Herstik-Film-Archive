@@ -161,7 +161,12 @@ export default function Home() {
 
         <div className="reviews-grid">
           {reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
+            <ReviewCard
+              key={review.id}
+              review={review}
+              onDelete={(id) =>
+                setReviews(prev => prev.filter(r => r.id !== id))
+              } />
           ))}
         </div>
       </section>
