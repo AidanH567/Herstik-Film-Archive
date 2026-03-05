@@ -154,10 +154,10 @@ export default function FilmDetail() {
             ========================= */}
 
             <section className="reviews-section">
-
+                <div className="review-button-container"> 
                 <h3>Reviews</h3>
 
-                <button
+                <button className="review-button"
                     onClick={async () => {
 
                         if (!dbMovieId) {
@@ -170,25 +170,40 @@ export default function FilmDetail() {
                 >
                     {showReviewForm ? "Cancel Review" : "Write Review"}
                 </button>
+                </div>
 
                 {showReviewForm && (
-                    <ReviewForm
-                        movieId={dbMovieId}
-                        onReviewCreated={(review) => {
-                            setReviews(prev => [review, ...prev])
-                            setShowReviewForm(false)
-                        }}
-                    />
+                    <div
+                        className="review-modal-overlay"
+                        onClick={() => setShowReviewForm(false)} // click on overlay closes modal
+                    >
+                        <div
+                            className="review-modal"
+                            onClick={(e) => e.stopPropagation()} // prevent clicks inside modal from closing
+                        >
+                            <ReviewForm
+                                movieId={dbMovieId}
+                                onReviewCreated={(review) => {
+                                    setReviews(prev => [review, ...prev]);
+                                    setShowReviewForm(false);
+                                }}
+                            />
+                        </div>
+                    </div>
                 )}
 
-               
-                {reviews.map((review) => (
-                    <ReviewCard
-                        key={review.id}
-                        review={review}
-                        movie={movie}
-                    />
-                ))}
+                <div className="reviews-grid">
+                    {reviews.map((review) => (
+                        <ReviewCard
+                            key={review.id}
+                            review={review}
+                            movie={movie}
+                            onDelete={(id) =>
+                                setReviews(prev => prev.filter(r => r.id !== id))
+                            }
+                        />
+                    ))}
+                </div>
 
             </section>
         </div>

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthContext";
 import { deleteReview } from "../services/reviewService";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"
 
 
 export default function ReviewCard({ review, movie: movieProp, onDelete }) {
@@ -21,7 +22,23 @@ export default function ReviewCard({ review, movie: movieProp, onDelete }) {
     }
   }
 
-  console.log("currentUserId:", currentUserId)
+  function renderStars(rating = 0) {
+  const stars = []
+
+  for (let i = 1; i <= 5; i++) {
+    if (rating >= i) {
+      stars.push(<FaStar key={i} />)
+    } else if (rating >= i - 0.5) {
+      stars.push(<FaStarHalfAlt key={i} />)
+    } else {
+      stars.push(<FaRegStar key={i} />)
+    }
+  }
+
+  return stars
+}
+
+ 
 
   const POSTER_BASE = "https://image.tmdb.org/t/p/w500"
   const CHARACTER_LIMIT = 120
@@ -69,7 +86,7 @@ export default function ReviewCard({ review, movie: movieProp, onDelete }) {
 
         <div className="review-rating">
           <span className="stars">
-            {"★".repeat(review.rating || 0)}
+            {renderStars(review.rating)}
           </span>
         </div>
 

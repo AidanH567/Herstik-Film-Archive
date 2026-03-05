@@ -48,6 +48,8 @@ export default function Films() {
         {loading && <p>Loading…</p>}
         {error && <p>Error: {error}</p>}
 
+        <button className="carousel-button" onClick={popularCarousel.back}>{"<"}</button>
+
         {!loading && !error && (
           <div className={`poster-row ${popularCarousel.isTransitioning ? "fade-out" : "fade-in"}`}>
             {popularCarousel.currentItems.map((movie) => (
@@ -63,6 +65,8 @@ export default function Films() {
 
         {loading && <p>Loading…</p>}
         {error && <p>Error: {error}</p>}
+
+        <button className="carousel-button" onClick={popularCarousel.back}>{"<"}</button>
 
         {!loading && !error && (
           <div className={`poster-row ${topRatedCarousel.isTransitioning ? "fade-out" : "fade-in"}`}>

@@ -2,11 +2,12 @@ import { useState } from "react";
 import { createReview } from "../services/reviewService";
 
 
-export default function ReviewForm({ movieId, onReviewCreated }) {
+export default function ReviewForm({ movieId, onReviewCreated, onClose }) {
 
-    const [rating, setRating] = useState(0)
+    const [rating, setRating] = useState(0.5)
     const [text, setText] = useState("")
     const [saving, setSaving] = useState(false)
+    console.log("rating:", rating)
 
 
     async function handleSubmit(e) {
@@ -24,8 +25,10 @@ export default function ReviewForm({ movieId, onReviewCreated }) {
 
             onReviewCreated(review)
 
-            setRating(0)
+            setRating(0.5)
             setText("")
+
+            onClose?.()
 
         } catch (err) {
             console.error("Review Failed", err.message)
@@ -38,13 +41,17 @@ export default function ReviewForm({ movieId, onReviewCreated }) {
         <form onSubmit={handleSubmit} className="review-form">
 
             <label >Rating</label>
-            <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
-                <option value={0}>0</option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
+            <select value={rating || rating === 0 ? rating : 0.5} onChange={(e) => setRating(Number(e.target.value))}>
+                <option value={0.5}>⯨</option>
+                <option value={1}>★</option>
+                <option value={1.5}>★⯨</option>
+                <option value={2}>★★</option>
+                <option value={2.5}>★★⯨</option>
+                <option value={3}>★★★</option>
+                <option value={3.5}>★★★⯨</option>
+                <option value={4}>★★★★</option>
+                <option value={4.5}>★★★★⯨</option>
+                <option value={5}>★★★★★</option>
             </select>
 
             <label>Review</label>
