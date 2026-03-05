@@ -6,6 +6,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"
 
 
 export default function ReviewCard({ review, movie: movieProp, onDelete }) {
+  console.log("movieProp:", movieProp)
 
   const { session } = useAuth()
   const currentUserId = session?.user?.id

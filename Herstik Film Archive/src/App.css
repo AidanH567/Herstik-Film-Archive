@@ -1422,7 +1422,7 @@ hr {
   background: #1c1c1c;
   padding: 2rem;
   border-radius: 12px;
-  width: 420px;
+  width: 700px;
   max-width: 90%;
 }
 
@@ -1464,4 +1464,42 @@ hr {
 
 .review-button:active {
   transform: translateY(0);
+}
+.review-form{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+}
+.review-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+.review-textarea {
+  height: 70%;
+  resize: none;
+}
+.review-movie-year{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.review-movie-year span{
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(167, 166, 166);
+}
+
+.review-movie-year h2{
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0;
+ 
+}
+.review-directors{
+  margin: 0;
 }

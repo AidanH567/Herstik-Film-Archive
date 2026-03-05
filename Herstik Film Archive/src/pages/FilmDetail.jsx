@@ -187,6 +187,8 @@ export default function FilmDetail() {
                                     setReviews(prev => [review, ...prev]);
                                     setShowReviewForm(false);
                                 }}
+                                movie={movie}
+                                credits={credits}
                             />
                         </div>
                     </div>
