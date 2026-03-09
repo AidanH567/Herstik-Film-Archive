@@ -1,3 +1,5 @@
+import { supabase } from "../supabase-client";
+
 export async function toggleMovieLike(movie, userId) {
 
   // 1️⃣ Ensure movie exists

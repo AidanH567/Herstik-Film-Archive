@@ -7,6 +7,7 @@ import { getReviewsForMovie } from "../services/reviewService";
 import { getOrCreateMovie } from "../services/reviewService";
 import { supabase } from "../supabase-client";
 import ReviewCard from "../components/RecentReviews";
+import { useMovieLikes } from "../hooks/useMovieLikes";
 
 export default function FilmDetail() {
 
@@ -24,6 +25,8 @@ export default function FilmDetail() {
     const [dbMovieId, setDbMovieId] = useState(null)
 
     const [showReviewForm, setShowReviewForm] = useState(false);
+
+    const { liked, likeCount, toggleLike, loading: movieloading } = useMovieLikes(movie);
 
     const POSTER_BASE = "https://image.tmdb.org/t/p/w500";
     const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280";
@@ -147,6 +150,14 @@ export default function FilmDetail() {
                     <p>{movie.overview}</p>
 
                 </div>
+
+                {movieloading ? (
+                    <p>Loading likes...</p>
+                ) : (
+                    <button onClick={toggleLike}>
+                        {liked ? "💖" : "🤍"} {likeCount}
+                    </button>
+                )}
             </section>
 
             {/* =========================
@@ -154,22 +165,22 @@ export default function FilmDetail() {
             ========================= */}
 
             <section className="reviews-section">
-                <div className="review-button-container"> 
-                <h3>Reviews</h3>
+                <div className="review-button-container">
+                    <h3>Reviews</h3>
 
-                <button className="review-button"
-                    onClick={async () => {
+                    <button className="review-button"
+                        onClick={async () => {
 
-                        if (!dbMovieId) {
-                            const dbMovie = await getOrCreateMovie(movie)
-                            setDbMovieId(dbMovie.id)
-                        }
+                            if (!dbMovieId) {
+                                const dbMovie = await getOrCreateMovie(movie)
+                                setDbMovieId(dbMovie.id)
+                            }
 
-                        setShowReviewForm(prev => !prev)
-                    }}
-                >
-                    {showReviewForm ? "Cancel Review" : "Write Review"}
-                </button>
+                            setShowReviewForm(prev => !prev)
+                        }}
+                    >
+                        {showReviewForm ? "Cancel Review" : "Write Review"}
+                    </button>
                 </div>
 
                 {showReviewForm && (
