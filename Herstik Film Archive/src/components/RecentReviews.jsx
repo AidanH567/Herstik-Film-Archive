@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthContext";
 import { deleteReview } from "../services/reviewService";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"
+import { useReviewLikes } from "../hooks/useReviewLikes";
 
 
 export default function ReviewCard({ review, movie: movieProp, onDelete }) {
@@ -10,6 +11,12 @@ export default function ReviewCard({ review, movie: movieProp, onDelete }) {
 
   const { session } = useAuth()
   const currentUserId = session?.user?.id
+
+  const {
+  liked,
+  likeCount,
+  toggleLike
+} = useReviewLikes(review.id);
 
   async function handleDelete() {
     console.log("DELETE CLICKED", review.id)
@@ -116,6 +123,10 @@ export default function ReviewCard({ review, movie: movieProp, onDelete }) {
             Delete
           </button>
         )}
+
+         <button className="popular-list-like-btn" onClick={toggleLike}>
+          {liked ? "♥" : "♡"} {likeCount}
+        </button>
 
       </div>
     </article>
