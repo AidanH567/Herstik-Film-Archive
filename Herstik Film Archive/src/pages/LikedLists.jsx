@@ -2,11 +2,18 @@ import { useEffect, useState } from "react";
 
 import ListCard from "../components/ListCard";
 import { getLikedLists } from "../services/likeService";
+import LoadingCard from "../components/LoadingCard";
 
 export default function LikedLists() {
 
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  function handleDeleteList(listId) {
+    setLists(prev =>
+      prev.filter(list => list.id !== listId)
+    );
+  }
 
   useEffect(() => {
 
@@ -25,11 +32,6 @@ export default function LikedLists() {
 
   }, []);
 
-  if (loading) return <p>Loading liked lists...</p>;
-
-  if (lists.length === 0) {
-    return <p>You haven’t liked any lists yet.</p>;
-  }
 
   return (
     <div className="liked-lists-page">
@@ -37,9 +39,15 @@ export default function LikedLists() {
       <h1>Liked Lists</h1>
 
       <div className="recently-added-grid">
-        {lists.map(list => (
-          <ListCard key={list.id} list={list} />
-        ))}
+        {loading
+          ? Array.from({ length: 3 }).map((_, i) => (
+            <LoadingCard key={i} />
+          ))
+          : lists.map((list) => (
+            <ListCard key={list.id}
+              list={list}
+              onDelete={handleDeleteList} />
+          ))}
       </div>
 
     </div>

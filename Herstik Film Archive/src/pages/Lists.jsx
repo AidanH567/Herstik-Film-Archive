@@ -4,12 +4,13 @@ import PopularFeaturedListCard from '../components/PopularFeaturedListCard';
 import RecentlyAddedCard from '../components/RecentlyAddedCard';
 import { getPublicLists } from '../services/listService';
 import { useEffect, useState } from 'react';
+import LoadingCard from '../components/LoadingCard';
 
 export default function Lists() {
 
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     async function loadLists() {
       try {
@@ -29,7 +30,7 @@ export default function Lists() {
   const popularLists = lists.slice(3, 6);
   const recentLists = lists.slice(0, 6);
 
-  if (loading) return <p>Loading lists...</p>;
+
 
   return <div className="list-page">
 
@@ -42,20 +43,33 @@ export default function Lists() {
       <h2>Featured Lists</h2>
       <hr />
       <div className="featured-lists-grid">
-        {featuredLists.map(list => (
-          <FeaturedListCard key={list.id} list={list} />
-        ))}
+        {loading
+          ? Array.from({ length: 3 }).map((_, i) => (
+            <LoadingCard key={i} />
+          ))
+          : featuredLists.map(list => (
+            <FeaturedListCard key={list.id} list={list} />
+          ))
+        }
       </div>
     </section>
+
+
     <section className="popular-lists-section">
       <h2>Popular Lists</h2>
       <hr />
       <div className="popular-lists-grid">
-        {popularLists.map(list => (
+        {loading
+          ? Array.from({ length: 3 }).map((_, i) => (
+            <LoadingCard key={i} />
+          ))
+          : popularLists.map(list => (
           <PopularFeaturedListCard key={list.id} list={list} />
         ))}
       </div>
     </section>
+
+
     <section className="recently-added-section">
       <h2>Recently Added</h2>
       <div className="recently-added-grid">
@@ -65,5 +79,7 @@ export default function Lists() {
         ))}
       </div>
     </section>
+
+
   </div>;
 }

@@ -102,12 +102,14 @@ export default function ListCard({ list, onDelete }) {
                         ✏
                     </Link>
 
-                    <button
-                        className="edit-film-btn"
-                        onClick={handleDeleteList}
-                    >
-                        🗑
-                    </button>
+                    {session?.user?.id === list?.user_id && (
+                        <button
+                            className="edit-film-btn"
+                            onClick={handleDeleteList}
+                        >
+                            🗑
+                        </button>
+                    )}
                 </div>
 
             </div>

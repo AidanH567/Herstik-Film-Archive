@@ -10,6 +10,7 @@ import useTopRatedMovies from "../hooks/useTopRatedMovies.jsx"
 import { useEffect, useState } from "react"
 import useCarousel from "../hooks/useCarousel.jsx"
 import { getRecentReviews } from "../services/reviewService.js"
+import Spinner from "../components/Spinner.jsx"
 
 
 
@@ -28,16 +29,20 @@ export default function Home() {
     loading: topRatedLoading,
     error: topRatedError
   } = useTopRatedMovies()
+
+
   const [isTransitioning, setIsTransitioning] = useState(false)
   const popularCarousel = useCarousel(movies)
   const upcomingCarousel = useCarousel(upcomingMovies)
   const topRatedCarousel = useCarousel(topRatedMovies)
-
-  console.log("Recent reviews:", reviews)
-
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false)
 
   const BACKDROP_BASE = "https://image.tmdb.org/t/p/w1280";
   const heroMovie = movies[0]
+  
+   useEffect(() => {
+    setHeroImageLoaded(false)
+  }, [heroMovie])
 
   useEffect(() => {
     async function loadReviews() {
@@ -54,7 +59,7 @@ export default function Home() {
     loadReviews()
   }, [])
 
-  if (loading) return <p>Loading recent reviews...</p>
+
 
   return (
     <div className="home">
@@ -64,11 +69,13 @@ export default function Home() {
       <section className="home-hero">
 
         <div className="film-detail-backdrop">
+
           {heroMovie?.backdrop_path && (
             <img
-              className="backdrop"
+              className={`backdrop ${heroImageLoaded ? "loaded" : ""}`}
               src={BACKDROP_BASE + heroMovie.backdrop_path}
               alt={heroMovie.title}
+              onLoad={() => setHeroImageLoaded(true)}
             />
           )}
         </div>
@@ -89,21 +96,19 @@ export default function Home() {
         justifyContent: "center",
         alignItems: "center"
       }}> Popular this week</h2>
+
       <section className="home-popular">
 
-        {loading && <p>Loading…</p>}
+        {loading && <Spinner />}
         {error && <p>Error: {error}</p>}
 
         <button className="carousel-button" onClick={popularCarousel.back}>{"<"}</button>
 
         {!loading && !error && (
-          <div className="poster-cotainer">
-            <div className={`poster-row ${popularCarousel.isTransitioning ? "fade-out" : "fade-in"}`}>
-
-              {popularCarousel.currentItems.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
+          <div className={`poster-row ${popularCarousel.isTransitioning ? "fade-out" : "fade-in"}`}>
+            {popularCarousel.currentItems.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
           </div>
         )}
         <button className="carousel-button" onClick={popularCarousel.next}>{">"}</button>

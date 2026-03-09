@@ -4,12 +4,13 @@ import { getMyLists } from "../services/listService";
 import { useEffect, useState } from "react";
 import CreateListForm from "../components/CreateListForm";
 import ListCard from "../components/ListCard";
+import LoadingCard from "../components/LoadingCard";
 
 export default function MyLists() {
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   
+
   function handleDeleteList(listId) {
     setLists(prev =>
       prev.filter(list => list.id !== listId)
@@ -38,11 +39,15 @@ export default function MyLists() {
 
         <div className="recently-added-grid">
           <hr />
-          {lists.map((list) => (
-            <ListCard key={list.id}
-              list={list}
-              onDelete={handleDeleteList}  />
-          ))}
+          {loading
+            ? Array.from({ length: 3 }).map((_, i) => (
+              <LoadingCard key={i} />
+            ))
+            : lists.map((list) => (
+              <ListCard key={list.id}
+                list={list}
+                onDelete={handleDeleteList} />
+            ))}
         </div>
       </div>
       <div className="my-lists-sidebar">
