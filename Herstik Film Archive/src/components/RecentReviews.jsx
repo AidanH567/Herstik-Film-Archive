@@ -7,7 +7,7 @@ import { useReviewLikes } from "../hooks/useReviewLikes";
 
 
 export default function ReviewCard({ review, movie: movieProp, onDelete }) {
-  console.log("movieProp:", movieProp)
+  
 
   const { session } = useAuth()
   const currentUserId = session?.user?.id

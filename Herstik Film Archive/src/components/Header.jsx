@@ -27,6 +27,7 @@ export default function Header() {
           <NavLink to="/lists">Lists</NavLink>
           <NavLink to="/my-lists">My Lists</NavLink>
           <NavLink to="/liked-lists">Liked Lists</NavLink>
+          <NavLink to="/liked-reviews">Liked Reviews</NavLink>
 
           {!session ? (
             <>
