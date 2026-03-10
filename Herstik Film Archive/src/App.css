@@ -225,7 +225,6 @@
   padding: 16px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.196);
   
-  
 }
 
 .reviews-grid {
@@ -1527,4 +1526,33 @@ hr {
 
 .btn-film-detail {
   height: 100%;
+}
+
+.liked-movie-card {
+  display: flex; /* row flex for image + text */
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 0;
+  border-bottom: 2px solid #242a3b;
+}
+
+.liked-movie-card-image-wrapper {
+  width: 15%;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+  flex-shrink: 0; /* prevents the wrapper from shrinking */
+}
+
+.liked-movie-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.liked-movie-card-info {
+  flex: 1; /* text takes the remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
