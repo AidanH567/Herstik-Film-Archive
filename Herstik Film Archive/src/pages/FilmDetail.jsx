@@ -149,15 +149,9 @@ export default function FilmDetail() {
 
                     <p>{movie.overview}</p>
 
+
                 </div>
 
-                {movieloading ? (
-                    <p>Loading likes...</p>
-                ) : (
-                    <button onClick={toggleLike}>
-                        {liked ? "💖" : "🤍"} {likeCount}
-                    </button>
-                )}
             </section>
 
             {/* =========================
@@ -181,6 +175,15 @@ export default function FilmDetail() {
                     >
                         {showReviewForm ? "Cancel Review" : "Write Review"}
                     </button>
+
+                    {movieloading ? (
+                        <p>Loading likes...</p>
+                    ) : (
+                        <button className="popular-list-like-btn btn-film-detail" onClick={toggleLike}>
+                            {liked ? "💖" : "🤍"} {likeCount}
+                        </button>
+                    )}
+
                 </div>
 
                 {showReviewForm && (

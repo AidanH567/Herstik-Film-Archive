@@ -1524,3 +1524,7 @@ hr {
   align-items: center;
   height: 180px;
 }
+
+.btn-film-detail {
+  height: 100%;
+}
