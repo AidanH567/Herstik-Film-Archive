@@ -105,3 +105,29 @@ export async function getRecentReviews(limit = 10) {
 
   return data
 }
+
+export async function getUserReviews() {
+  // 1️⃣ Get the current user
+  const {
+    data: { user },
+    error: userError
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    throw new Error("Not authenticated");
+  }
+
+  // 2️⃣ Fetch reviews created by this user
+  const { data, error } = await supabase
+    .from("reviews")
+    .select(`
+      *,
+      movie:movies (*)
+    `)
+    .eq("user_id", user.id)            // filter by logged-in user
+    .order("created_at", { ascending: false }); // newest first
+
+  if (error) throw error;
+
+  return data;
+}

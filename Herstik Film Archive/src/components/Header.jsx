@@ -44,8 +44,11 @@ export default function Header() {
 
               <div className="dropdown-menu">
 
-                <NavLink to="/my-lists">My Lists</NavLink>
                 <NavLink to="/likes">Likes</NavLink>
+                <NavLink to="/reviews">Reviews</NavLink>
+                <NavLink to="/my-lists">Lists</NavLink>
+                
+                
 
 
                 <button
