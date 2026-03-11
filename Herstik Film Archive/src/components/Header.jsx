@@ -17,36 +17,47 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header-inner">
-        <NavLink to="/" className="nav brand">
+        <NavLink to="/">
           Herstik Film Archive
         </NavLink>
 
         <nav className="nav">
           <NavLink to="/films">Films</NavLink>
-          <NavLink to="/journal">Journal</NavLink>
+          {/* <NavLink to="/journal">Journal</NavLink> */}
           <NavLink to="/lists">Lists</NavLink>
-          <NavLink to="/my-lists">My Lists</NavLink>
+          {/* <NavLink to="/my-lists">My Lists</NavLink>
           <NavLink to="/liked-lists">Liked Lists</NavLink>
           <NavLink to="/liked-reviews">Liked Reviews</NavLink>
-          <NavLink to="/liked-movies">Liked Movies</NavLink>
+          <NavLink to="/liked-movies">Liked Movies</NavLink> */}
 
           {!session ? (
             <>
               <NavLink to="/signin">Sign In</NavLink>
-              <NavLink to="/signup">Sign Up</NavLink>
+              <NavLink to="/signup">Create Account</NavLink>
             </>
           ) : (
-            <button
-              onClick={handleSignOut}
-              className="signout-button"
-            >
-              Sign Out
-            </button>
-          )}
-          {session && (
-            <span className="user-name">
-              Hi, {userName}
-            </span>
+            <div className="profile-dropdown">
+
+              <span className="profile-trigger">
+                Hi, {userName} ▾
+              </span>
+
+              <div className="dropdown-menu">
+
+                <NavLink to="/my-lists">My Lists</NavLink>
+                <NavLink to="/likes">Likes</NavLink>
+
+
+                <button
+                  onClick={handleSignOut}
+                  className="signout-button"
+                >
+                  Sign Out
+                </button>
+
+              </div>
+
+            </div>
           )}
         </nav>
       </div>

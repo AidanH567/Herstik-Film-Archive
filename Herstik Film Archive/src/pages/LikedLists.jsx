@@ -36,7 +36,7 @@ export default function LikedLists() {
   return (
     <div className="liked-lists-page">
 
-      <h1>Liked Lists</h1>
+      
 
       <div className="recently-added-grid">
         {loading

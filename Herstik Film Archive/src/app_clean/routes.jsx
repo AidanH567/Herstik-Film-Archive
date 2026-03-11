@@ -25,6 +25,7 @@ import EditListPage from '../pages/EditListPage.jsx';
 import LikedLists from '../pages/LikedLists.jsx';
 import LikedReviews from '../pages/LikedReviews.jsx';
 import LikedMovies from '../pages/LikedMovies.jsx';
+import LikesLayout from './LikesLayout.jsx';
 
 export default function AppRoutes() {
   return (
@@ -39,13 +40,17 @@ export default function AppRoutes() {
           <Route path=":listId" element={<ListDetailPage />} />
           <Route path=":listId/edit" element={<EditListPage />} />
         </Route>
-        
+
         <Route path="my-lists" element={<MyLists />} />
-        <Route path="liked-lists" element={<LikedLists />} />
 
-        <Route path="liked-reviews" element={<LikedReviews />} />
 
-        <Route path="liked-movies" element={<LikedMovies />} />
+        <Route path="likes" element={<LikesLayout />}>
+
+          <Route index element={<LikedMovies />} />
+          <Route path="liked-reviews" element={<LikedReviews />} />
+          <Route path="liked-lists" element={<LikedLists />} />
+
+        </Route>
 
         <Route path="journal" element={<Journal />} />
         <Route path="signin" element={<Signin />} />

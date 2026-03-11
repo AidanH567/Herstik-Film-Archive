@@ -29,7 +29,7 @@ export default function LikedReviews() {
   return (
     <div className="liked-reviews-page">
 
-      <h1>Liked Reviews</h1>
+      
 
       <div className="reviews-grid">
         {loading

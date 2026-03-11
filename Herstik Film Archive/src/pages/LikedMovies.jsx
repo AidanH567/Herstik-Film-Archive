@@ -43,7 +43,7 @@ export default function LikedMovies() {
 
   return (
     <div className="liked-movies-page">
-      <h1>Liked Movies</h1>
+
       <div className="movies-grid">
         {loading
           ? Array.from({ length: 6 }).map((_, i) => <LoadingCard key={i} />)

@@ -37,6 +37,7 @@
 .nav {
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 /* Base nav link style */
@@ -1555,4 +1556,89 @@ hr {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.profile-dropdown{
+   position: relative;
+   cursor: pointer;
+}
+
+.profile-trigger {
+  padding: 8px 12px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+.profile-trigger:hover {
+  color: #e6e9f0;
+  opacity: 0.7;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  display: none;
+
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+
+
+  min-width: 180px;
+
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+  display: flex;
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+  padding: 10px 14px;
+  text-align: left;
+  border: none;
+  background: none;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background: #f5f5f5;
+}
+.dropdown-menu a:hover,
+.dropdown-menu button:hover  {
+  background: #f5f5f5;
+}
+.profile-dropdown:hover .profile-trigger {
+  opacity: 0.7;
+}
+
+.likes-nav {
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.likes-nav a {
+  padding: 8px 0;
+  text-decoration: none;
+  color: white;
+  transition: color 0.2s ease;
+}
+
+.likes-nav a:hover {
+  color: #ccc; /* light grey */
+}
+
+.likes-nav a.active {
+  border-bottom: 2px solid white;
+  font-weight: 600;
+  color: white;
 }
