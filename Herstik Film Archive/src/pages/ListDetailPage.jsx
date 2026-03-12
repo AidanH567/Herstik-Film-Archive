@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import { getListById, getMoviesForList } from "../services/listService";
 import ListMovieCard from "../components/ListMovieCard";
@@ -37,7 +37,7 @@ export default function ListDetailPage() {
 
   }, [listId]);
 
- 
+
 
   async function handleAddComment() {
 
@@ -114,22 +114,24 @@ export default function ListDetailPage() {
             alt="Profile"
             className="profile-photo"
           />
-          <span>List by <strong>You</strong></span>
-          <hr />
-        </section>
+          <span>
+            List by <strong>{list.user?.name}</strong>
+          </span>
+          <span className="list-detail-created">Created {new Date(list.created_at).toLocaleDateString()}</span>
 
-        <section className="list-detail-time-posted">
-          <p>Created {new Date(list.created_at).toLocaleDateString()}</p>
-          <hr />
         </section>
+        <hr />
+
 
         <section className="list-detail-info">
-          <h2>{list.name}</h2>
+          <h1>{list.name}</h1>
+
           {list.description && (
             <p className="list-description">
               {list.description}
             </p>
           )}
+          <hr />
         </section>
 
         <section className="list-detail-movies">
@@ -193,8 +195,12 @@ export default function ListDetailPage() {
 
         </section>
 
-
       </div>
+
+      <div className="my-lists-sidebar">
+        <Link to="/lists/new">Create a New List....</Link>
+      </div>
+
     </div>
   )
 };

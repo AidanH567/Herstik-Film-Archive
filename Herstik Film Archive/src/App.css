@@ -433,7 +433,14 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
+  flex-direction: row;
+  justify-content: start;
+  font-size: 0.9rem;
+}
+
+.list-detail-created{
+  opacity: 0.7;
 }
 
 .featured-list-profile>img {
@@ -607,6 +614,8 @@ hr {
   width: 50%;
   display: flex;
   flex-direction: column;
+  opacity: 0.8;
+  font-size: 0.9rem;
 }
 
 .list-description textarea {
@@ -1654,4 +1663,10 @@ hr {
 .review-card--profile .review-delete-button {
   background: #ff4d4d;
   margin-bottom: 5px;
+}
+
+.list-detail-page{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
 }
