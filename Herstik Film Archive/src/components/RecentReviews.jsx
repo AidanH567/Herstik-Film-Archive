@@ -6,7 +6,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa"
 import { useReviewLikes } from "../hooks/useReviewLikes";
 
 
-export default function ReviewCard({ review, movie: movieProp, onDelete }) {
+export default function ReviewCard({ review, movie: movieProp, onDelete, variant }) {
   
 
   const { session } = useAuth()
@@ -66,7 +66,7 @@ export default function ReviewCard({ review, movie: movieProp, onDelete }) {
     : review.text.slice(0, CHARACTER_LIMIT) + "..."
 
   return (
-    <article className="review-card">
+    <article className={`review-card ${variant ? `review-card--${variant}` : ""}`}>
 
       {posterUrl && (
         <Link to={`/films/${movie.tmdb_id}`}>
@@ -117,6 +117,10 @@ export default function ReviewCard({ review, movie: movieProp, onDelete }) {
           </button>
         )}
 
+         <button className="popular-list-like-btn" onClick={toggleLike}>
+          {liked ? "♥" : "♡"} {likeCount}
+        </button>
+        
         {currentUserId === review.user_id && (
           <button onClick={handleDelete}
             className="review-delete-button">
@@ -124,9 +128,7 @@ export default function ReviewCard({ review, movie: movieProp, onDelete }) {
           </button>
         )}
 
-         <button className="popular-list-like-btn" onClick={toggleLike}>
-          {liked ? "♥" : "♡"} {likeCount}
-        </button>
+        
 
       </div>
     </article>

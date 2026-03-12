@@ -221,7 +221,7 @@
 
 .review-card {
   display: grid;
-  grid-template-columns: 90px 1fr;
+  grid-template-columns: 100px 1fr;
   gap: 16px;
   padding: 16px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.196);
@@ -239,6 +239,7 @@
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 6px;
+  height: 100%;
 }
 
 .review-content {
@@ -1641,4 +1642,16 @@ hr {
   border-bottom: 2px solid white;
   font-weight: 600;
   color: white;
+}
+
+.review-card--profile .popular-list-like-btn {
+  background: transparent;
+  border: 1px solid white;
+  width: 50px;
+  
+}
+
+.review-card--profile .review-delete-button {
+  background: #ff4d4d;
+  margin-bottom: 5px;
 }

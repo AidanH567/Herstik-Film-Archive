@@ -24,13 +24,14 @@ export default function Reviews() {
 
   return (
     <div className="reviews-page">
-      <div>Review Page</div>
+      <h1>Your Reviews</h1>
+      <hr />
 
       <section className="review-grid">
         {loading 
         ? Array.from({length:3 }).map((_,i) => <LoadingCard key={i}/>)
         : reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+              <ReviewCard key={review.id} review={review} variant="profile"/>
             ))}
 
       </section>
