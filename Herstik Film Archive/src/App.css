@@ -1670,3 +1670,60 @@ hr {
   display: flex;
   flex-direction: row;
 }
+
+.profile-summary{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 50px;
+  align-items: center;
+}
+
+.profile-summary-info{
+  
+}
+.profile-summary-img img{
+  height: 100px;
+  width: 100px;
+  border-radius: 60px
+}
+
+.profile-summary-stats{
+  display: flex;
+  gap: 30px;
+  margin-left: auto;
+}
+
+.profile-summary-info > * {
+  margin: 7px 0;
+}
+
+.profile-nav-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  border: 1px solid #242a3b;
+}
+
+.profile-nav-bar ul{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  list-style: none;
+  
+}
+
+.profile-nav-bar a {
+  color: white;
+  opacity: 0.7;
+  text-decoration: none;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.profile-nav-bar a:hover {
+  color: #4da3ff;
+  opacity: 1;
+}
