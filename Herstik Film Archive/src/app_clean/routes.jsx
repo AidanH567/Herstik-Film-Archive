@@ -27,6 +27,7 @@ import LikedReviews from '../pages/LikedReviews.jsx';
 import LikedMovies from '../pages/LikedMovies.jsx';
 import LikesLayout from './LikesLayout.jsx';
 import ProfilePage from '../pages/ProfilePage.jsx';
+import ProfileLayout from './ProfileLayout.jsx';
 
 export default function AppRoutes() {
   return (
@@ -43,7 +44,14 @@ export default function AppRoutes() {
         </Route>
 
         <Route path="my-lists" element={<MyLists />} />
-        <Route path="profile-page" element={<ProfilePage />} />
+
+        <Route path="profile-page" element={<ProfileLayout />}>
+          <Route index element={<ProfilePage />} />
+          {/* <Route path="films" element={<ProfileFilms />} /> */}
+          {/* <Route path="reviews" element={<ProfileReviews />} />
+          <Route path="lists" element={<ProfileLists />} />
+          <Route path="likes" element={<ProfileLikes />} /> */}
+        </Route>
 
 
         <Route path="likes" element={<LikesLayout />}>
