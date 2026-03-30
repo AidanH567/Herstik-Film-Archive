@@ -4,12 +4,12 @@ export default function ProfileNavBar() {
   return (
     <nav className="profile-nav-bar">
       <ul>
-        <li><NavLink to="profile-page">Profile</NavLink></li>
-        <li><NavLink to="profile-activity">Activity</NavLink></li>
-        <li><NavLink to="profile-films">Films</NavLink></li>
-        <li><NavLink to="profile-reviews">Reviews</NavLink></li>
-        <li><NavLink to="profile-lists">Lists</NavLink></li>
-        <li><NavLink to="profile-likes">Likes</NavLink></li>
+        <li><NavLink to="/profile-page">Profile</NavLink></li>
+        <li><NavLink to="activity">Activity</NavLink></li>
+        <li><NavLink to="films">Films</NavLink></li>
+        <li><NavLink to="reviews">Reviews</NavLink></li>
+        <li><NavLink to="lists">Lists</NavLink></li>
+        <li><NavLink to="likes">Likes</NavLink></li>
       </ul>
     </nav>
   )
