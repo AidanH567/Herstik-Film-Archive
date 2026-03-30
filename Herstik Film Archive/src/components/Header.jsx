@@ -48,6 +48,7 @@ export default function Header() {
                 <NavLink to="/reviews">Reviews</NavLink>
                 <NavLink to="/my-lists">Lists</NavLink>
                 <NavLink to="/profile-page">Profile</NavLink>
+                <NavLink to="/profile-settings">Profile Settings</NavLink>
                 
 
 

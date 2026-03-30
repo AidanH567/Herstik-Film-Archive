@@ -33,12 +33,15 @@ import ProfileActivity from '../pages/ProfileActivity.jsx';
 import ProfileLists from '../pages/ProfileLists.jsx';
 import ProfileLikes from '../pages/ProfileLikes.jsx';
 import ProfileReviews from '../pages/ProfileReviews.jsx';
+import ProfileSettingsPage from '../pages/ProfileSettingsPage.jsx';
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<Home />} />
+
+        <Route path="profile-settings" element={<ProfileSettingsPage />}></Route>
 
         {/* 📝 Lists section (Letterboxd-style) */}
         <Route path="lists" element={<ListsLayout />}>
@@ -55,13 +58,19 @@ export default function AppRoutes() {
           <Route path="films" element={<ProfileFilms />} />
           <Route path="activity" element={<ProfileActivity />} />
           <Route path="lists" element={<ProfileLists />} />
-          <Route path="likes" element={<ProfileLikes />} />
+          {/* <Route path="likes" element={<ProfileLikes />} /> */}
           <Route path="reviews" element={<ProfileReviews />} />
+
+           <Route path="likes" element={<LikesLayout />}>
+          <Route index element={<LikedMovies />} />
+          <Route path="liked-reviews" element={<LikedReviews />} />
+          <Route path="liked-lists" element={<LikedLists />} />
+
+        </Route>
         </Route>
 
 
         <Route path="likes" element={<LikesLayout />}>
-
           <Route index element={<LikedMovies />} />
           <Route path="liked-reviews" element={<LikedReviews />} />
           <Route path="liked-lists" element={<LikedLists />} />
