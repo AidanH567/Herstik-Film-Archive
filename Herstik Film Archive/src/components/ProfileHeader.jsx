@@ -1,4 +1,10 @@
+import { useAuth } from "../context/AuthContext";
+
 export default function ProfileHeader() {
+
+  const { session } = useAuth()
+  const userName = session?.user?.user_metadata?.name;
+
   return (
     <div className="profile-summary">
 
@@ -7,7 +13,7 @@ export default function ProfileHeader() {
       </div>
 
       <div className="profile-summary-info">
-        <h2>Username</h2>
+        <h2>{userName ? userName : "Your"}'s Profile</h2>
         <p>Member since: January 2024</p>
         <p>Bio: This is a short bio for the user.</p>
       </div>

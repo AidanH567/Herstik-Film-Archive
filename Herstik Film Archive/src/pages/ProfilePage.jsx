@@ -6,11 +6,10 @@ import useTrendingMovies from "../hooks/useTrendingMovies";
 import { getRecentReviews } from "../services/reviewService";
 import ReviewCard from "../components/RecentReviews";
 
-
-
 export default function ProfilePage() {
 
     const { movies, loading, error } = useTrendingMovies()
+
 
     const [reviews, setReviews] = useState([])
     const [loadingReviews, setLoadingReviews] = useState(true)
