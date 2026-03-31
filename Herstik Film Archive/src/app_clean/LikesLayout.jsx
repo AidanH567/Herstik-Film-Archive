@@ -1,10 +1,15 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function LikesLayout() {
+
+  const { session } = useAuth()
+  const userName = session?.user?.user_metadata?.name;
+
   return (
     <div className='likes-layout'>
 
-      <h1>Your Likes</h1>
+      <h1>{userName ? `${userName}'s` : "Your"} Likes</h1>
 
       <nav className='likes-nav'>
         <NavLink to="." end>Movies</NavLink>
