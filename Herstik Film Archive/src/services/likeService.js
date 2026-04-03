@@ -91,3 +91,24 @@ export async function getLikedLists() {
 
   return data.map(row => row.list);
 }
+
+export async function getLikedMoviesByUserId(userId) {
+  const { data, error } = await supabase
+    .from("movie_likes")
+    .select(`
+      created_at,
+      movie:movies (
+        id,
+        tmdb_id,
+        title,
+        poster_path,
+        release_year
+      )
+    `)
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+
+  return data.map(row => row.movie);
+}

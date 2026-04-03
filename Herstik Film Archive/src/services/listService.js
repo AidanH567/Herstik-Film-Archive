@@ -140,16 +140,6 @@ export async function removeMovieFromList(listId, movieId) {
 
   if (error) throw error;
 }
-// export async function getListById(listId) {
-//   const { data, error } = await supabase
-//     .from("lists")
-//     .select("*")
-//     .eq("id", listId)
-//     .single();
-
-//   if (error) throw error;
-//   return data;
-// }
 
 export async function getListById(listId) {
 

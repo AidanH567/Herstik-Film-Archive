@@ -1,21 +1,21 @@
-import { useAuth } from "../context/AuthContext";
-
-export default function ProfileHeader() {
-
-  const { session } = useAuth()
-  const userName = session?.user?.user_metadata?.name;
-
+export default function ProfileHeader({ profile }) {
+  const joinedDate = profile?.created_at
+    ? new Date(profile.created_at).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+      })
+    : "";
+    
   return (
     <div className="profile-summary">
-
       <div className="profile-summary-img">
-        <img src="../public/profile-photo.jpg" alt="" />
+        <img src="/profile-photo.jpg" alt={profile?.name || "Profile"} />
       </div>
 
       <div className="profile-summary-info">
-        <h2>{userName ? userName : "Your"}'s Profile</h2>
-        <p>Member since: January 2024</p>
-        <p>Bio: This is a short bio for the user.</p>
+        <h2>{profile?.name ? `${profile.name}'s Profile` : "Profile"}</h2>
+        <p>Member since: {joinedDate || "—"}</p>
+        <p>Bio: {profile?.bio || "No bio yet."}</p>
       </div>
 
       <div className="profile-summary-stats">
@@ -23,9 +23,8 @@ export default function ProfileHeader() {
         <span>This Year</span>
         <span>Lists</span>
         <span>Following</span>
-        <span>Follwers</span>
+        <span>Followers</span>
       </div>
-
     </div>
-  )
+  );
 }

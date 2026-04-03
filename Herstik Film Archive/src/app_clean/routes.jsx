@@ -53,20 +53,18 @@ export default function AppRoutes() {
 
         <Route path="my-lists" element={<MyLists />} />
 
-        <Route path="profile-page" element={<ProfileLayout />}>
+        <Route path="profile-page/:userId" element={<ProfileLayout />}>
           <Route index element={<ProfilePage />} />
           <Route path="films" element={<ProfileFilms />} />
           <Route path="activity" element={<ProfileActivity />} />
           <Route path="lists" element={<ProfileLists />} />
-          {/* <Route path="likes" element={<ProfileLikes />} /> */}
           <Route path="reviews" element={<ProfileReviews />} />
 
-           <Route path="likes" element={<LikesLayout />}>
-          <Route index element={<LikedMovies />} />
-          <Route path="liked-reviews" element={<LikedReviews />} />
-          <Route path="liked-lists" element={<LikedLists />} />
-
-        </Route>
+          <Route path="likes" element={<LikesLayout />}>
+            <Route index element={<LikedMovies />} />
+            <Route path="liked-reviews" element={<LikedReviews />} />
+            <Route path="liked-lists" element={<LikedLists />} />
+          </Route>
         </Route>
 
 
