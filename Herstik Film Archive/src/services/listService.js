@@ -160,6 +160,24 @@ export async function getListById(listId) {
   return data;
 }
 
+
+export async function getListsByUserId(userId) {
+  const { data, error } = await supabase
+    .from("lists")
+    .select(`
+      *,
+      user:user_profiles (
+        id,
+        name
+      )
+    `)
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
 export async function deleteList(listId) {
 
   const { error } = await supabase

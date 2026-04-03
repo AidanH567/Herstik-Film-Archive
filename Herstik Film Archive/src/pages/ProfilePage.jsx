@@ -5,7 +5,7 @@ import ReviewCard from "../components/RecentReviews";
 import { getFavoriteMovies } from "../services/profileService";
 import { getLikedMoviesByUserId } from "../services/likeService";
 import { getUserReviews } from "../services/reviewService";
-import { getListById } from "../services/listService";
+import { getListsByUserId } from "../services/listService";
 
 export default function ProfilePage() {
   const { profile } = useOutletContext();
@@ -28,7 +28,7 @@ export default function ProfilePage() {
             getFavoriteMovies(profile.id),
             getLikedMoviesByUserId(profile.id),
             getUserReviews(profile.id),
-            getListById(profile.id),
+            getListsByUserId(profile.id),
           ]);
 
         setFavoriteMovies(favoritesData || []);
