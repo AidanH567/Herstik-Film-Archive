@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FavoriteMovieModal from "../components/FavouriteMoviePopUp";
+import { updateProfile, saveFavoriteMovies, getMyProfile, getMyFavoriteMovies, } from "../services/profileService";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProfileSettingsPage() {
 
     const [name, setName] = useState("");
     const [bio, setBio] = useState("");
+
+    const { session } = useAuth()
+    const userName = session?.user?.user_metadata?.name;
 
     const [selectedMovies, setSelectedMovies] = useState([]);
     const [activeSlot, setActiveSlot] = useState(null);
@@ -29,12 +34,52 @@ export default function ProfileSettingsPage() {
         setShowMovieModal(false);
     }
 
+    async function handleSubmit(e) {
+        e.preventDefault();
 
+        try {
+            setSaving(true);
+
+            await updateProfile({
+                name,
+                bio
+            });
+
+            await saveFavoriteMovies(selectedMovies);
+
+            console.log("Settings saved");
+        } catch (err) {
+            console.error("Failed to save settings:", err.message);
+        } finally {
+            setSaving(false);
+        }
+    }
+
+    useEffect(() => {
+        async function loadSettings() {
+            try {
+                const profile = await getMyProfile();
+                const favorites = await getMyFavoriteMovies();
+
+                setName(profile.name || "");
+                setBio(profile.bio || "");
+                setSelectedMovies(favorites || []);
+            } catch (err) {
+                console.error("Failed to load settings:", err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadSettings();
+    }, []);
+
+    if (loading) return <p>Loading settings...</p>;
     return (
         <div className="profile-settings-page">
             <h1>Profile Settings</h1>
 
-            <form className="settings-form" action="">
+            <form className="settings-form" action="" onSubmit={handleSubmit}>
 
                 <section className="settings-section">
                     <h2>Account Information</h2>
@@ -45,7 +90,7 @@ export default function ProfileSettingsPage() {
                             type="text"
                             id="username"
                             name="username"
-                            placeholder="Enter your username"
+                            placeholder={name}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />

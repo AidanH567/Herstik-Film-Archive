@@ -46,7 +46,7 @@ export default function ProfilePage() {
 
             <div className="profile-fav-films">
 
-                <h2>Favourite Films</h2>
+                <h2>Recent likes</h2>
                 <hr />
 
                 <div className="poster-row">
