@@ -7,6 +7,7 @@ import { getLikedMoviesByUserId } from "../services/likeService";
 import { getUserReviews } from "../services/reviewService";
 import { getListsByUserId } from "../services/listService";
 import ListCard from "../components/ListCard";
+import ProfileMovieCard from "../components/ProfileMovieCard";
 
 export default function ProfilePage() {
     const { profile } = useOutletContext();
@@ -63,7 +64,7 @@ export default function ProfilePage() {
                         <p>Loading favourite films...</p>
                     ) : favoriteMovies.length > 0 ? (
                         favoriteMovies.slice(0, 4).map((movie) => (
-                            <MovieCard key={movie.id} movie={movie} />
+                            <ProfileMovieCard key={movie.id} movie={movie} />
                         ))
                     ) : (
                         <p>No favourite films yet.</p>
@@ -80,7 +81,7 @@ export default function ProfilePage() {
                         <p>Loading recent likes...</p>
                     ) : likedMovies.length > 0 ? (
                         likedMovies.slice(0, 4).map((movie) => (
-                            <MovieCard key={movie.id} movie={movie} />
+                            <ProfileMovieCard key={movie.id} movie={movie} />
                         ))
                     ) : (
                         <p>No liked movies yet.</p>
